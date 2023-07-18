@@ -44,6 +44,7 @@ void serialEventRun(void)
 
 unsigned long loopDelay_on = millis();
 unsigned long loopDelay_int_temp = millis();
+unsigned long loopDelay_bit_alive = millis();
 
 bool bt_enabled = false;
 bool bt_connected = false;
