@@ -146,6 +146,7 @@ void loop() {
     }
     if ((tim_sleep>=50000) && (!bt_connected)){
       Serial.println("sleep 1");
+      digitalWrite(ESP_WKP,1);
       LowPower.shutdown();
     }
 
@@ -196,15 +197,10 @@ void serialEvent2(){
 }
 
 void wakeUP_fun() {
-  // This function will be called once on device wakeup
-  // You can do some little operations here (like changing variables which will be used in the loop)
-  // Remember to avoid calling delay() and long running functions since this functions executes in interrupt context
-  repetitions ++;
   Serial.println("sleep 3");
   tim_sleep=0;
-  digitalWrite(ESP_WKP,1);
-  delay(300);
   digitalWrite(ESP_WKP,0);
+  
 }
 
 static int32_t readVref()
