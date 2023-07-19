@@ -19,6 +19,7 @@ void on_BT_comm();
 
 extern bool bt_enabled;
 extern bool bt_connected;
+extern bool bt_alive;
 
 extern String line;
 extern String line1;

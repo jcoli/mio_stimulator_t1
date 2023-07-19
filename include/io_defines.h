@@ -8,21 +8,22 @@ STM32F401 - Mio Stimulation
 #ifndef __IO_DEFINES_H__
 #define __IO_DEFINES_H__ 
 
-// #define BT_DOOR     PB10
-// #define BT_POWER    PA5
+#define BT_POWER     PA0
+
 // #define BT_PROGRAM  PB0
 // #define BTE_1       PB1
 
-#define INT_LED     PC13
-// #define PW_LED      PC13
-// #define RUN_LED     PC14
-// #define HEAT_LED    PC15
+#define STATUS_LED     PC13
+#define RUN_LED        PC14
+#define BAT_LED        PC15
+#define BUZZER_PIN     PB15
+#define ESP_WKP        PA1
+
 // #define FAN_LED     PA1
 // #define DOOR_LED    PA0
 // // #define P3_LED PB2
 // #define PW_FAN      PB13
 // #define PW_HEATER   PB14
-// #define BUZZER_PIN  PB15
 
 // #define TFT_SDA     PB7
 // #define TFT_SCL     PB6 

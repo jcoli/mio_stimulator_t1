@@ -8,5 +8,6 @@ STM32F401 - Mio Stimulation
 #ifndef __DIG_INPUT_H__
 #define __DIG_INPUT_H__ 
 
+void dig_input_begin();
 
 #endif

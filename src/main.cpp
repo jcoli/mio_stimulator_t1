@@ -6,12 +6,15 @@ STM32F401 - Mio Stimulation
 **/
 
 #include <Arduino.h>
+#include <STM32LowPower.h>
 
 #include "defines.h"
 #include "io_defines.h"
 #include "tools.h"
 #include "communication.h"
 #include "control.h"
+#include "dig_input.h"
+#include "dig_output.h"
 
 #define CALX_TEMP 25
 #define V25       760
@@ -21,6 +24,7 @@ STM32F401 - Mio Stimulation
 #define LL_ADC_RESOLUTION LL_ADC_RESOLUTION_12B
 #define ADC_RANGE 4096
 
+#define BT_POWER pinNametoDigitalPin(SYS_WKUP1)
 
 HardwareSerial Serial2(PA3, PA2);
 
@@ -32,6 +36,7 @@ void serialEvent();
 void serialEvent2();
 void serialEventRun(void);
 void Update_IT_callback(void);
+void wakeUP_fun();
 
 void serialEventRun(void)
 {
@@ -64,6 +69,8 @@ bool bt_alive = false;
 bool intLed = true;
 
 int tim_alive = 0;
+int tim_conn = 0;
+int tim_sleep = 0;
 
 String line         = "";
 String line1         = "";
@@ -74,6 +81,8 @@ bool string2Complete = false;
 
 int32_t VRef;
 float intTemp;
+
+volatile int repetitions = 1;
 
 #if defined(TIM1)
     TIM_TypeDef *Instance1 = TIM1;
@@ -89,13 +98,11 @@ void setup() {
   Serial2.begin(19200); 
   analogReadResolution(12);
   delay(1000);
-  Serial.println("bt_init0");
-  delay(1000);
-  // bt_init();
-  // delay(1000);
-  Serial.println("bt_init1");
+  dig_output_begin();
+  dig_input_begin();
 
-  pinMode(INT_LED, OUTPUT);
+  LowPower.begin();
+  LowPower.attachInterruptWakeup(BT_POWER, wakeUP_fun, FALLING, SHUTDOWN_MODE);
 
   Tim1->setOverflow(20, HERTZ_FORMAT); // 10 Hz
   Tim1->attachInterrupt(Update_IT_callback);
@@ -109,8 +116,6 @@ void loop() {
     loopDelay_on = millis();
     // Serial.println("button1");
     // Serial2.print("AT+NAME=TEC2");
-    intLed = !intLed;  
-    digitalWrite(INT_LED, HIGH);
     // Serial2.print("teste#");
   } 
 
@@ -129,22 +134,35 @@ void loop() {
 
   if (millis() - loopDelay_bit_alive > 2000){
     loopDelay_bit_alive = millis();
-    if (tim_alive>=100){
+    Serial.print("sleep: ");
+    Serial.println(tim_sleep);
+    if ((tim_alive>=100) && !(bt_connected)){
        bt_alive = false; 
        on_bit_alive();
-       
     }
+    if ((tim_conn>=100) && (bt_connected)){
+       bt_connected= false; 
+       on_bit_connected();
+    }
+    if ((tim_sleep>=50000) && (!bt_connected)){
+      Serial.println("sleep 1");
+      LowPower.shutdown();
+    }
+
+
   }
   if (millis() - loopDelay_count_alive > 20){
     loopDelay_count_alive = millis();
     tim_alive++;
+    tim_conn++;
+    tim_sleep++;
   }  
   
 }
 
 void Update_IT_callback(void)
-{ // Toggle pin. 10hz toogle --> 5Hz PWM
-  digitalWrite(INT_LED, !digitalRead(INT_LED));
+{ 
+  digitalWrite(STATUS_LED, !digitalRead(STATUS_LED));
 }
 
 void serialEvent(){
@@ -175,6 +193,18 @@ void serialEvent2(){
   }
   // Serial.println(line2);
   // line2 = "";
+}
+
+void wakeUP_fun() {
+  // This function will be called once on device wakeup
+  // You can do some little operations here (like changing variables which will be used in the loop)
+  // Remember to avoid calling delay() and long running functions since this functions executes in interrupt context
+  repetitions ++;
+  Serial.println("sleep 3");
+  tim_sleep=0;
+  digitalWrite(ESP_WKP,1);
+  delay(300);
+  digitalWrite(ESP_WKP,0);
 }
 
 static int32_t readVref()

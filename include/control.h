@@ -10,6 +10,7 @@ STM32F401 - Mio Stimulation
 
 void on_receive(int mSize);
 void on_bit_alive();
+void on_bit_connected();
 void decoder_one();
 void decoder_two();
 void decoder_three();
