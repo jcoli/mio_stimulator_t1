@@ -11,6 +11,16 @@ STM32F401 - Mio Stimulation
 #include "io_defines.h"
 #include "tools.h"
 #include "communication.h"
+#include "control.h"
+
+#define CALX_TEMP 25
+#define V25       760
+#define AVG_SLOPE 2500
+#define VREFINT   1210
+
+#define LL_ADC_RESOLUTION LL_ADC_RESOLUTION_12B
+#define ADC_RANGE 4096
+
 
 HardwareSerial Serial2(PA3, PA2);
 
@@ -21,6 +31,7 @@ void serialEvent();
 // void serialEvent3();
 void serialEvent2();
 void serialEventRun(void);
+void Update_IT_callback(void);
 
 void serialEventRun(void)
 {
@@ -45,10 +56,14 @@ void serialEventRun(void)
 unsigned long loopDelay_on = millis();
 unsigned long loopDelay_int_temp = millis();
 unsigned long loopDelay_bit_alive = millis();
+unsigned long loopDelay_count_alive = millis();
 
 bool bt_enabled = false;
 bool bt_connected = false;
+bool bt_alive = false;
 bool intLed = true;
+
+int tim_alive = 0;
 
 String line         = "";
 String line1         = "";
@@ -60,21 +75,32 @@ bool string2Complete = false;
 int32_t VRef;
 float intTemp;
 
+#if defined(TIM1)
+    TIM_TypeDef *Instance1 = TIM1;
+#else
+    TIM_TypeDef *Instance = TIM2;
+#endif
+  
+HardwareTimer *Tim1 = new HardwareTimer(Instance1);
 
 void setup() {
   Serial.begin(115200);
   Serial1.begin(19200);
   Serial2.begin(19200); 
   analogReadResolution(12);
-  delay(5000);
-  pinMode(INT_LED, OUTPUT);
-  digitalWrite(INT_LED, HIGH);
+  delay(1000);
   Serial.println("bt_init0");
   delay(1000);
-  bt_init();
-  delay(1000);
+  // bt_init();
+  // delay(1000);
   Serial.println("bt_init1");
-  
+
+  pinMode(INT_LED, OUTPUT);
+
+  Tim1->setOverflow(20, HERTZ_FORMAT); // 10 Hz
+  Tim1->attachInterrupt(Update_IT_callback);
+  Tim1->resume();
+
 }
 
 void loop() {
@@ -100,6 +126,25 @@ void loop() {
     Serial.println(intTemp);
     Serial2.print("temp,0,"+String(intTemp)+",#");
   }
+
+  if (millis() - loopDelay_bit_alive > 2000){
+    loopDelay_bit_alive = millis();
+    if (tim_alive>=100){
+       bt_alive = false; 
+       on_bit_alive();
+       
+    }
+  }
+  if (millis() - loopDelay_count_alive > 20){
+    loopDelay_count_alive = millis();
+    tim_alive++;
+  }  
+  
+}
+
+void Update_IT_callback(void)
+{ // Toggle pin. 10hz toogle --> 5Hz PWM
+  digitalWrite(INT_LED, !digitalRead(INT_LED));
 }
 
 void serialEvent(){
@@ -122,7 +167,7 @@ void serialEvent2(){
     char inChar = (char)Serial2.read();
     line2 += inChar;
     // Serial.println(line2);
-    if ((inChar == '#') ){
+    if ((inChar == '#') || line2.equals("OK")){
       string2Complete = true;
       // Serial.println(line2);
       on_BT_comm();

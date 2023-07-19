@@ -58,7 +58,9 @@ void split_msg_4(String msg){
     int p = 0;
     for(int i =0; i < msg.length(); i++){
        if(msg.charAt(i) == ','){
-           retMsg4[p] = msg.substring(j, i);
+           String st = msg.substring(j, i);
+           st.trim();
+           retMsg4[p] = st;
            j = i +1;
            p++;
        }
