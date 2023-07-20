@@ -129,7 +129,7 @@ void loop() {
     Serial.println(VRef,DEC);
     Serial.print("Temp: ");
     Serial.println(intTemp);
-    Serial2.print("temp,0,"+String(intTemp)+",#");
+    Serial2.print("temp,0,0,"+String(intTemp)+",#");
   }
 
   if (millis() - loopDelay_bit_alive > 2000){
@@ -140,7 +140,7 @@ void loop() {
        bt_alive = false; 
        on_bit_alive();
     }
-    if ((tim_conn>=100) && (bt_connected)){
+    if ((tim_conn>=1000) && (bt_connected)){
        bt_connected= false; 
        on_bit_connected();
     }
