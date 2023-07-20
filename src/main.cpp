@@ -144,7 +144,7 @@ void loop() {
        bt_connected= false; 
        on_bit_connected();
     }
-    if ((tim_sleep>=50000) && (!bt_connected)){
+    if ((tim_sleep>=30000) && (!bt_connected)){
       Serial.println("sleep 1");
       digitalWrite(ESP_WKP,1);
       LowPower.shutdown();
