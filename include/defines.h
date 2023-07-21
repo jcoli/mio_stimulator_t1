@@ -42,8 +42,4 @@ static const char processor[] = "STM32F401CC";
 #define TIMER_INTERVAL_MS         100
 #define HW_TIMER_INTERVAL_MS      50
 
-
-
-
-
 #endif

@@ -144,8 +144,6 @@ void loop() {
       digitalWrite(ESP_WKP,1);
       LowPower.shutdown();
     }
-
-
   }
   if (millis() - loopDelay_count_alive > 20){
     loopDelay_count_alive = millis();
