@@ -16,11 +16,6 @@ STM32F401 - Mio Stimulation
 #include "dig_input.h"
 #include "dig_output.h"
 
-#define CALX_TEMP 25
-#define V25       760
-#define AVG_SLOPE 2500
-#define VREFINT   1210
-
 #define LL_ADC_RESOLUTION LL_ADC_RESOLUTION_12B
 #define ADC_RANGE 4096
 

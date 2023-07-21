@@ -9,6 +9,7 @@ STM32F401 - Mio Stimulation
 #define __DEFINES_H__
 
 /* defines */
+
 #define V03_MAX 3.6
 #define V03_MIN 3.1
 #define V05_MAX 5.5
