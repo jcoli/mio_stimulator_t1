@@ -23,5 +23,7 @@ void dig_output_begin(){
     pinMode(BAT_LED, OUTPUT);
     pinMode(BUZZER_PIN, OUTPUT);
     pinMode(ESP_WKP, OUTPUT);
-    digitalWrite(ESP_WKP,0);
+    digitalWrite(ESP_WKP,1);
+    
+
 }

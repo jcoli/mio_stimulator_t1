@@ -8,7 +8,7 @@ STM32F401 - Mio Stimulation
 #ifndef __IO_DEFINES_H__
 #define __IO_DEFINES_H__ 
 
-#define BT_POWER     PA0
+#define BT_POWER     PA0 
 
 // #define BT_PROGRAM  PB0
 // #define BTE_1       PB1

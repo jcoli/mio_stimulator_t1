@@ -124,7 +124,7 @@ void loop() {
     Serial.println(VRef,DEC);
     Serial.print("Temp: ");
     Serial.println(intTemp);
-    Serial2.print("temp,0,0,"+String(intTemp)+",#");
+    Serial2.print("te,0,0,"+String(intTemp)+",#");
   }
 
   if (millis() - loopDelay_bit_alive > 2000){
@@ -139,9 +139,9 @@ void loop() {
        bt_connected= false; 
        on_bit_connected();
     }
-    if ((tim_sleep>=30000) && (!bt_connected)){
+    if ((tim_sleep>=5000) && (!bt_connected)){
       Serial.println("sleep 1");
-      digitalWrite(ESP_WKP,1);
+      digitalWrite(ESP_WKP,0);
       LowPower.shutdown();
     }
   }
@@ -192,7 +192,7 @@ void serialEvent2(){
 void wakeUP_fun() {
   Serial.println("sleep 3");
   tim_sleep=0;
-  digitalWrite(ESP_WKP,0);
+  digitalWrite(ESP_WKP,1);
   
 }
 
