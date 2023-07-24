@@ -117,7 +117,6 @@ void decoder_four(){
             Serial.println("decoder_four - 3");
         } 
     }
-    
 }
 
 void decoder_five(){

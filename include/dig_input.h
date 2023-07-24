@@ -9,5 +9,7 @@ STM32F401 - Mio Stimulation
 #define __DIG_INPUT_H__ 
 
 void dig_input_begin();
+void check_button(int btn, int dur);
+void wakeUP_fun();
 
 #endif
