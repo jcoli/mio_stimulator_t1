@@ -8,6 +8,7 @@ STM32F401 - Mio Stimulation
 #include <Arduino.h>
 #include <Bounce2.h>
 #include <STM32LowPower.h>
+#include <HardwareTimer.h> 
 
 #include "communication.h"
 #include "control.h"
