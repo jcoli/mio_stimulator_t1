@@ -123,11 +123,13 @@ void loop() {
     Serial.print("Temp: ");
     Serial.println(intTemp);
     Serial2.print("te,0,0," + String(intTemp) + ",#");
+    // delay(30);
+    // Serial2.println("co,0,0,1,#");
   }
 
   if (millis() - loopDelay_bit_alive > 5000) {
     loopDelay_bit_alive = millis();
-    Serial.print("sleep: ");
+    // Serial2.print("sleep: ");
     Serial.println(tim_sleep);
     if ((tim_alive >= 100) && !(bt_connected)) {
       bt_alive = false;
@@ -142,6 +144,8 @@ void loop() {
       Serial.println("sleep 1");
       digitalWrite(ESP_WKP, 0);
       LowPower.shutdown(0);
+    }else{
+      tim_sleep=0;  
     }
   }
   if (millis() - loopDelay_count_alive > 20) {
