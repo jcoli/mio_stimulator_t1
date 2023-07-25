@@ -34,19 +34,19 @@ extern String retMsg4[4];
 extern String retMsg5[5]; 
 
 void bt_init(){
-    Serial.println("bt_init");
+    // Serial.println("bt_init");
     String msg = "";
     Serial2.print("AT");
     msg = "";
 }
 
 void bt_at_command(String at_comm){
-    Serial.println(at_comm);
+    // Serial.println(at_comm);
     Serial2.print(at_comm);
 }
 
 void on_serial(){ 
-    Serial.print(line);
+    // Serial.print(line);
     stringComplete = false;
     line1 = "";
 }
@@ -57,7 +57,7 @@ void on_BT_comm(){
     }else{
         // Serial.println(line2);
         split_msg_4(line2);
-        Serial.println("split: "+ retMsg4[0] + " - " +retMsg4[1] + " - " + retMsg4[2] + " - " + retMsg4[3]);
+        // Serial.println("split: "+ retMsg4[0] + " - " +retMsg4[1] + " - " + retMsg4[2] + " - " + retMsg4[3]);
         decoder_four();
         string2Complete = false;
         line2="";

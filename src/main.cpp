@@ -15,6 +15,7 @@ STM32F401 - Mio Stimulation
 #include "defines.h"
 #include "dig_input.h"
 #include "dig_output.h"
+#include "ana_Input.h"
 #include "io_defines.h"
 #include "tools.h"
 
@@ -72,6 +73,7 @@ bool string2Complete = false;
 
 int32_t VRef;
 float intTemp;
+float batLevel;
 
 volatile int repetitions = 1;
 
@@ -87,10 +89,11 @@ void setup() {
   Serial.begin(115200);
   Serial1.begin(19200);
   Serial2.begin(19200);
-  analogReadResolution(12);
+  
   delay(1000);
   dig_output_begin();
   dig_input_begin();
+  ana_input_begin();
   bounce.attach(BT_POWER, INPUT_PULLDOWN);
   bounce.interval(5);
 
@@ -112,8 +115,9 @@ void loop() {
     // Serial2.print("teste#");
   }
 
-  if (millis() - loopDelay_int_temp > 20000) {
+  if (millis() - loopDelay_int_temp > 7000) {
     loopDelay_int_temp = millis();
+    read_analog();
     VRef = readVref();
     intTemp = readTempSensor(VRef);
     Serial.print("VRef: ");
@@ -122,15 +126,18 @@ void loop() {
     Serial.println(VRef, DEC);
     Serial.print("Temp: ");
     Serial.println(intTemp);
-    Serial2.print("te,0,0," + String(intTemp) + ",#");
+    Serial2.println("te,0,0," + String(intTemp) + ",#");
+    Serial2.println("ba,0,0," + String(batLevel) + ",#");
     // delay(30);
     // Serial2.println("co,0,0,1,#");
+
+    
   }
 
-  if (millis() - loopDelay_bit_alive > 5000) {
+  if (millis() - loopDelay_bit_alive > 2000) {
     loopDelay_bit_alive = millis();
-    // Serial2.print("sleep: ");
-    Serial.println(tim_sleep);
+    // Serial.print("sleep: ");
+    // Serial.println(tim_sleep);
     if ((tim_alive >= 100) && !(bt_connected)) {
       bt_alive = false;
       on_bit_alive();
@@ -141,10 +148,12 @@ void loop() {
     }
 
     if ((tim_sleep >= SHUTDOWN_INTERVAL_MS) && (!bt_connected)) {
-      Serial.println("sleep 1");
+      // Serial.println("sleep 1");
       digitalWrite(ESP_WKP, 0);
       LowPower.shutdown(0);
-    }else{
+    }else if (bt_connected){
+      // Serial.print("sleep2: ");
+      // Serial.println(tim_sleep);
       tim_sleep=0;  
     }
   }

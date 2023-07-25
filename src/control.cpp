@@ -41,7 +41,7 @@ void on_bit_alive(){
         Tim1->setOverflow(20, HERTZ_FORMAT);
         bt_enabled = false;
         tim_alive = 0;
-        Serial.println("on_bit_alive");
+        // Serial.println("on_bit_alive");
     }
 }
 
@@ -49,9 +49,8 @@ void on_bit_connected(){
     if (!bt_connected){
         Tim1->setOverflow(10, HERTZ_FORMAT);
         tim_conn = 0;
-        
         Serial2.print("co,0,0,1,#");
-        Serial.println("on_bit_conn");
+        // Serial.println("on_bit_conn");
     }
 }
 
@@ -94,14 +93,14 @@ void decoder_three(){
 }
 
 void decoder_four(){
-    Serial.println("decoder_four a");
-    Serial.println("split: "+ retMsg4[0] + " - " +retMsg4[1] + " - " + retMsg4[2] + " - " + retMsg4[3]);
+    // Serial.println("decoder_four a");
+    // Serial.println("split: "+ retMsg4[0] + " - " +retMsg4[1] + " - " + retMsg4[2] + " - " + retMsg4[3]);
     if ((retMsg4[0].equals("re") && (retMsg4[3].equals("1"))) && (!bt_connected)){
         Tim1->setOverflow(10, HERTZ_FORMAT);
         bt_enabled = true;
         bt_alive = true;
         tim_alive = 0;
-        Serial.println("decoder_four - 1");
+        // Serial.println("decoder_four - 1");
     }
     if (retMsg4[0].equals("co")){
         if(retMsg4[3].equals("1")){
@@ -109,13 +108,13 @@ void decoder_four(){
             bt_connected = true;
             tim_conn = 0;
             tim_sleep = 0;
-            Serial.println("decoder_four - 2");
+            // Serial.println("decoder_four - 2");
         }
         if(retMsg4[3].equals("0")){
             Tim1->setOverflow(10, HERTZ_FORMAT);
             bt_connected = false;
             tim_conn = 0;
-            Serial.println("decoder_four - 3");
+            // Serial.println("decoder_four - 3");
         } 
     }
 }
