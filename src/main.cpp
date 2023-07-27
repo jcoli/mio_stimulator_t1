@@ -30,7 +30,8 @@ void serialEvent();
 // void serialEvent3();
 void serialEvent2();
 void serialEventRun(void);
-void Update_IT_callback(void);
+void Update_Tim1_callback(void);
+void Update_Tim3_callback(void);
 
 void serialEventRun(void) {
   // #if defined(HAVE_HWSERIAL2)
@@ -77,13 +78,14 @@ float batLevel;
 
 volatile int repetitions = 1;
 
-#if defined(TIM1)
+// #if defined(TIM1)
 TIM_TypeDef *Instance1 = TIM1;
-#else
-TIM_TypeDef *Instance = TIM2;
-#endif
+// #else
+TIM_TypeDef *Instance = TIM3;
+// #endif
 
 HardwareTimer *Tim1 = new HardwareTimer(Instance1);
+HardwareTimer *Tim3 = new HardwareTimer(Instance);
 
 void setup() {
   Serial.begin(115200);
@@ -102,8 +104,14 @@ void setup() {
   
 
   Tim1->setOverflow(20, HERTZ_FORMAT);
-  Tim1->attachInterrupt(Update_IT_callback);
+  Tim1->attachInterrupt(Update_Tim1_callback);
   Tim1->resume();
+
+  Tim3->setOverflow(50, HERTZ_FORMAT);
+  Tim3->attachInterrupt(Update_Tim3_callback);
+  Tim3->resume();
+
+
 }
 
 void loop() {
@@ -152,7 +160,7 @@ void loop() {
       digitalWrite(ESP_WKP, 0);
       LowPower.shutdown(0);
     }else if (bt_connected){
-      // Serial.print("sleep2: ");
+      Serial.print("sleep2: ");
       // Serial.println(tim_sleep);
       tim_sleep=0;  
     }
@@ -173,8 +181,13 @@ void loop() {
   }
 }
 
-void Update_IT_callback(void) {
+void Update_Tim1_callback(void) {
   digitalWrite(STATUS_LED, !digitalRead(STATUS_LED));
+}
+
+void Update_Tim3_callback(void) {
+  digitalWrite(RUN_LED, !digitalRead(RUN_LED));
+  digitalWrite(BAT_LED, !digitalRead(BAT_LED));
 }
 
 void serialEvent() {
