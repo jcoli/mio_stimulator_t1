@@ -16,6 +16,8 @@ void bt_init();
 void bt_at_command(String at_comm);
 void on_serial();
 void on_BT_comm();
+void sendMsgTimer();
+void sendMsg(String s);
 
 extern bool bt_enabled;
 extern bool bt_connected;
@@ -32,6 +34,10 @@ extern String retMsg2[2];
 extern String retMsg3[3];
 extern String retMsg4[4];
 extern String retMsg5[5]; 
+
+extern int32_t VRef;
+extern float intTemp;
+extern float batLevel;
 
 void bt_init(){
     // Serial.println("bt_init");
@@ -68,4 +74,13 @@ void on_BT_comm(){
     }
     
     
+}
+
+void sendMsgTimer(){
+    Serial2.println("te,0,0," + String(intTemp) + ",#");
+    Serial2.println("ba,0,0," + String(batLevel) + ",#");
+}
+
+void sendMsg(String s){
+    Serial2.println(s+",#");
 }
