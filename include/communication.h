@@ -12,6 +12,8 @@ void bt_init();
 void bt_at_command(String at_comm);
 void on_serial();
 void on_BT_comm(); 
+void sendMsgTimer();
+void sendMsg(String s);
 
 
 #endif

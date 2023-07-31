@@ -134,8 +134,7 @@ void loop() {
     Serial.println(VRef, DEC);
     Serial.print("Temp: ");
     Serial.println(intTemp);
-    Serial2.println("te,0,0," + String(intTemp) + ",#");
-    Serial2.println("ba,0,0," + String(batLevel) + ",#");
+    
     // delay(30);
     // Serial2.println("co,0,0,1,#");
 
