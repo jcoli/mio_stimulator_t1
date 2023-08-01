@@ -41,8 +41,8 @@ void ana_input_begin(){
 void read_analog(){
     float bat = analogRead(BAT_VOLT);
     batLevel = (map(bat, 0, 4095, 0, 10300));    
-    Serial.print("BatLevel ");
-    Serial.print(batLevel);
-    Serial.print(" - ");
-    Serial.println(bat);
+    // Serial.print("BatLevel ");
+    // Serial.print(batLevel);
+    // Serial.print(" - ");
+    // Serial.println(bat);
 }

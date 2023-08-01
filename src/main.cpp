@@ -107,7 +107,7 @@ void setup() {
   Tim1->attachInterrupt(Update_Tim1_callback);
   Tim1->resume();
 
-  Tim3->setOverflow(50, HERTZ_FORMAT);
+  Tim3->setOverflow(1, HERTZ_FORMAT);
   Tim3->attachInterrupt(Update_Tim3_callback);
   Tim3->resume();
 
@@ -128,12 +128,13 @@ void loop() {
     read_analog();
     VRef = readVref();
     intTemp = readTempSensor(VRef);
-    Serial.print("VRef: ");
-    Serial.println(VRef);
+    // Serial.print("VRef: ");
+    // Serial.println(VRef);
     VRef = map(VRef, 0, 4095, 0, 500);
-    Serial.println(VRef, DEC);
-    Serial.print("Temp: ");
-    Serial.println(intTemp);
+    // Serial.println(VRef, DEC);
+    // Serial.print("Temp: ");
+    // Serial.println(intTemp);
+    sendMsgTimer();
     
     // delay(30);
     // Serial2.println("co,0,0,1,#");
@@ -159,7 +160,7 @@ void loop() {
       digitalWrite(ESP_WKP, 0);
       LowPower.shutdown(0);
     }else if (bt_connected){
-      Serial.print("sleep2: ");
+      // Serial.print("sleep2: ");
       // Serial.println(tim_sleep);
       tim_sleep=0;  
     }

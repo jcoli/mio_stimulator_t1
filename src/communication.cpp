@@ -77,10 +77,12 @@ void on_BT_comm(){
 }
 
 void sendMsgTimer(){
-    Serial2.println("te,0,0," + String(intTemp) + ",#");
-    Serial2.println("ba,0,0," + String(batLevel) + ",#");
+    Serial2.print("te,0,0," + String(intTemp) + ",#");
+    // Serial.print("send: ");
+    delay(50);
+    Serial2.print("ba,0,0," + String(batLevel) + ",#");
 }
 
 void sendMsg(String s){
-    Serial2.println(s+",#");
+    Serial2.print(s+",#");
 }
