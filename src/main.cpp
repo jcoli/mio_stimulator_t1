@@ -30,7 +30,6 @@ void serialEvent();
 // void serialEvent3();
 void serialEvent2();
 void serialEventRun(void);
-void Update_Tim1_callback(void);
 void Update_Tim3_callback(void);
 
 void serialEventRun(void) {
@@ -78,14 +77,23 @@ float batLevel;
 
 volatile int repetitions = 1;
 
-// #if defined(TIM1)
-TIM_TypeDef *Instance1 = TIM1;
-// #else
-TIM_TypeDef *Instance = TIM3;
-// #endif
+// TIM_TypeDef *Instance = (TIM_TypeDef *)pinmap_peripheral(digitalPinToPinName(PULSE_0), PinMap_PWM);
+// uint32_t channel = STM_PIN_CHANNEL(pinmap_function(digitalPinToPinName(PULSE_0), PinMap_PWM));
 
-HardwareTimer *Tim1 = new HardwareTimer(Instance1);
-HardwareTimer *Tim3 = new HardwareTimer(Instance);
+// TIM_TypeDef *Instance1 = TIM1;
+TIM_TypeDef *Instance3 = TIM3;
+// TIM_TypeDef *Instance4 = TIM4;
+// TIM_TypeDef *Instance9 = TIM9;
+
+// TIM_TypeDef *Instance10 = (TIM_TypeDef *)pinmap_peripheral(digitalPinToPinName(PULSE_0), PinMap_PWM);
+// uint32_t channel = STM_PIN_CHANNEL(pinmap_function(digitalPinToPinName(PULSE_0), PinMap_PWM));
+
+HardwareTimer *Tim1 = new HardwareTimer(TIM1);
+HardwareTimer *Tim3 = new HardwareTimer(TIM3);
+// HardwareTimer *Tim10 = new HardwareTimer(Instance10);
+// HardwareTimer *Tim9 = new HardwareTimer(Instance9);
+
+
 
 void setup() {
   Serial.begin(115200);
@@ -103,14 +111,17 @@ void setup() {
   LowPower.attachInterruptWakeup(BT_POWER, wakeUP_fun, RISING, SHUTDOWN_MODE);
   
 
-  Tim1->setOverflow(20, HERTZ_FORMAT);
-  Tim1->attachInterrupt(Update_Tim1_callback);
-  Tim1->resume();
-
-  Tim3->setOverflow(1, HERTZ_FORMAT);
+  Tim3->setOverflow(20, HERTZ_FORMAT);
   Tim3->attachInterrupt(Update_Tim3_callback);
   Tim3->resume();
 
+  // Tim3->setOverflow(1, HERTZ_FORMAT);
+  // Tim3->attachInterrupt(Update_Tim3_callback);
+  // Tim3->resume();
+
+  // 
+  
+  // Tim1->setPWM(channel, PULSE_0, 7, 1);
 
 }
 
@@ -138,7 +149,12 @@ void loop() {
     
     // delay(30);
     // Serial2.println("co,0,0,1,#");
-
+    // if (Tim1->isRunning()){
+    //   Tim1->pause();
+    // }else{
+    //   Tim1->resume();
+    // }
+    
     
   }
 
@@ -181,14 +197,11 @@ void loop() {
   }
 }
 
-void Update_Tim1_callback(void) {
+void Update_Tim3_callback(void) {
   digitalWrite(STATUS_LED, !digitalRead(STATUS_LED));
 }
 
-void Update_Tim3_callback(void) {
-  digitalWrite(RUN_LED, !digitalRead(RUN_LED));
-  digitalWrite(BAT_LED, !digitalRead(BAT_LED));
-}
+
 
 void serialEvent() {
   while (Serial.available()) {
