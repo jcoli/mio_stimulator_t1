@@ -34,11 +34,12 @@ extern String retMsg3[3];
 extern String retMsg4[4];
 extern String retMsg5[5]; 
 
-extern HardwareTimer *Tim3;
+// extern HardwareTimer *Tim1;
+extern HardwareTimer *tim3;
 
 void on_bit_alive(){
     if (!bt_alive){
-        Tim3->setOverflow(20, HERTZ_FORMAT);
+        tim3->setOverflow(20, HERTZ_FORMAT);
         bt_enabled = false;
         tim_alive = 0;
         // Serial.println("on_bit_alive");
@@ -47,7 +48,7 @@ void on_bit_alive(){
 
 void on_bit_connected(){
     if (!bt_connected){
-        Tim3->setOverflow(10, HERTZ_FORMAT);
+        tim3->setOverflow(10, HERTZ_FORMAT);
         tim_conn = 0;
         Serial2.print("co,0,0,1,#");
         // Serial.println("on_bit_conn");
@@ -96,7 +97,7 @@ void decoder_four(){
     // Serial.println("decoder_four a");
     // Serial.println("split: "+ retMsg4[0] + " - " +retMsg4[1] + " - " + retMsg4[2] + " - " + retMsg4[3]);
     if ((retMsg4[0].equals("re") && (retMsg4[3].equals("1"))) && (!bt_connected)){
-        Tim3->setOverflow(10, HERTZ_FORMAT);
+        tim3->setOverflow(10, HERTZ_FORMAT);
         bt_enabled = true;
         bt_alive = true;
         tim_alive = 0;
@@ -104,14 +105,14 @@ void decoder_four(){
     }
     if (retMsg4[0].equals("co")){
         if(retMsg4[3].equals("1")){
-            Tim3->setOverflow(1, HERTZ_FORMAT);
+            tim3->setOverflow(1, HERTZ_FORMAT);
             bt_connected = true;
             tim_conn = 0;
             tim_sleep = 0;
             Serial2.print("co,0,0,1,#");
         }
         if(retMsg4[3].equals("0")){
-            Tim3->setOverflow(10, HERTZ_FORMAT);
+            tim3->setOverflow(10, HERTZ_FORMAT);
             bt_connected = false;
             tim_conn = 0;
             // Serial.println("decoder_four - 3");

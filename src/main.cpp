@@ -31,6 +31,8 @@ void serialEvent();
 void serialEvent2();
 void serialEventRun(void);
 void Update_Tim3_callback(void);
+void Compare_IT_callback();
+void Update_IT_callback();
 
 void serialEventRun(void) {
   // #if defined(HAVE_HWSERIAL2)
@@ -59,6 +61,7 @@ bool bt_enabled = false;
 bool bt_connected = false;
 bool bt_alive = false;
 bool first_loop = true;
+bool run_enabled = false;
 
 int tim_alive = 0;
 int tim_conn = 0;
@@ -77,23 +80,19 @@ float batLevel;
 
 volatile int repetitions = 1;
 
-// TIM_TypeDef *Instance = (TIM_TypeDef *)pinmap_peripheral(digitalPinToPinName(PULSE_0), PinMap_PWM);
-// uint32_t channel = STM_PIN_CHANNEL(pinmap_function(digitalPinToPinName(PULSE_0), PinMap_PWM));
-
-// TIM_TypeDef *Instance1 = TIM1;
-TIM_TypeDef *Instance3 = TIM3;
+// TIM_TypeDef *Instance = TIM1;
+// TIM_TypeDef *Instance3 = TIM3;
 // TIM_TypeDef *Instance4 = TIM4;
 // TIM_TypeDef *Instance9 = TIM9;
 
-// TIM_TypeDef *Instance10 = (TIM_TypeDef *)pinmap_peripheral(digitalPinToPinName(PULSE_0), PinMap_PWM);
+// TIM_TypeDef *Instance3 = (TIM_TypeDef *)pinmap_peripheral(digitalPinToPinName(PULSE_0), PinMap_PWM);
 // uint32_t channel = STM_PIN_CHANNEL(pinmap_function(digitalPinToPinName(PULSE_0), PinMap_PWM));
 
-HardwareTimer *Tim1 = new HardwareTimer(TIM1);
-HardwareTimer *Tim3 = new HardwareTimer(TIM3);
+HardwareTimer *tim1 = new HardwareTimer(TIM1);
+HardwareTimer *tim2 = new HardwareTimer(TIM2);
+HardwareTimer *tim3 = new HardwareTimer(TIM3);
 // HardwareTimer *Tim10 = new HardwareTimer(Instance10);
 // HardwareTimer *Tim9 = new HardwareTimer(Instance9);
-
-
 
 void setup() {
   Serial.begin(115200);
@@ -109,19 +108,25 @@ void setup() {
 
   LowPower.begin();
   LowPower.attachInterruptWakeup(BT_POWER, wakeUP_fun, RISING, SHUTDOWN_MODE);
-  
 
-  Tim3->setOverflow(20, HERTZ_FORMAT);
-  Tim3->attachInterrupt(Update_Tim3_callback);
-  Tim3->resume();
+  tim1->setMode(1, TIMER_OUTPUT_COMPARE_PWM1, PA8);
+  tim1->setOverflow(10000, MICROSEC_FORMAT); // 100000 microseconds = 100 milliseconds
+  tim1->setCaptureCompare(1, 100, RESOLUTION_12B_COMPARE_FORMAT); 
+  tim1->resume();
 
-  // Tim3->setOverflow(1, HERTZ_FORMAT);
-  // Tim3->attachInterrupt(Update_Tim3_callback);
-  // Tim3->resume();
-
-  // 
-  
-  // Tim1->setPWM(channel, PULSE_0, 7, 1);
+  tim2->setMode(1, TIMER_OUTPUT_COMPARE_PWM1, PA5);
+  tim2->setMode(2, TIMER_OUTPUT_COMPARE_PWM2, PB3);
+  // tim2->setPrescaleFactor(8); // Due to setOverflow with MICROSEC_FORMAT, prescaler will be computed automatically based on timer input clock
+  tim2->setOverflow(5000, MICROSEC_FORMAT); // 100000 microseconds = 100 milliseconds
+  tim2->setCaptureCompare(1, 30, RESOLUTION_12B_COMPARE_FORMAT); 
+  tim2->setCaptureCompare(2, 10, RESOLUTION_12B_COMPARE_FORMAT); 
+  // tim2->attachInterrupt(Update_IT_callback);
+  // tim2->attachInterrupt(2, Compare_IT_callback);
+  tim2->resume();
+ 
+  tim3->setOverflow(20, HERTZ_FORMAT);
+  tim3->attachInterrupt(Update_Tim3_callback);
+  tim3->resume();
 
 }
 
@@ -182,23 +187,30 @@ void loop() {
     }
   }
   if (millis() - loopDelay_count_alive > 20) {
+    loopDelay_count_alive = millis();
     bounce.update();
-
     int btn = bounce.read();
-
     if (btn == HIGH && bounce.currentDuration() > 3000) {
       check_button(btn, 0);
     }
-
-    loopDelay_count_alive = millis();
     tim_alive++;
     tim_conn++;
     tim_sleep++;
   }
 }
 
-void Update_Tim3_callback(void) {
+void Update_Tim3_callback() {
   digitalWrite(STATUS_LED, !digitalRead(STATUS_LED));
+}
+
+void Update_IT_callback()
+{ // Update event correspond to Rising edge of PWM when configured in PWM1 mode
+  digitalWrite(STATUS_LED, LOW); // pin2 will be complementary to pin
+}
+
+void Compare_IT_callback()
+{ // Compare match event correspond to falling edge of PWM when configured in PWM1 mode
+  digitalWrite(STATUS_LED, HIGH);
 }
 
 
