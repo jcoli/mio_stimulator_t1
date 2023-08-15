@@ -8,27 +8,36 @@ STM32F401 - Mio Stimulation
 #define __VARIABLES_H__
 #include <Arduino.h>
 
-unsigned long loopDelay = millis();
-unsigned long loopDelayInput = millis();
-unsigned long loopDelayTFT = millis();
-unsigned long loopDelayPot = millis();
+static int32_t readVref();
+static int32_t readTempSensor(int32_t VRef);
 
+unsigned long loopDelay_on = millis();
+unsigned long loopDelay_int_temp = millis();
+unsigned long loopDelay_bit_alive = millis();
+unsigned long loopDelay_count_alive = millis();
+
+bool bt_enabled = false;
+bool bt_connected = false;
+bool bt_alive = false;
+bool first_loop = true;
+bool run_enabled = false;
+
+int tim_alive = 0;
+int tim_conn = 0;
+int tim_sleep = 0;
+
+String line = "";
+String line1 = "";
+String line2 = "";
+bool stringComplete = false;
 bool string1Complete = false;
 bool string2Complete = false;
-bool string3Complete = false;
-bool serial_event = false;
-String line         = "";
-String line1         = "";
-String line2         = "";
 
-uint16_t port_dig_in_ext;
-uint16_t port_dig_out_ext;
-uint16_t port_inj_ext;
-uint16_t port_coil_ext;
+int32_t VRef;
+float intTemp;
+float batLevel;
 
-bool out_bat = true;
-bool out_l15 = true;
-bool out_l30 = true;
+volatile int repetitions = 1;
 
 
 #endif

@@ -18,13 +18,12 @@ STM32F401 - Mio Stimulation
 #include "ana_Input.h"
 #include "io_defines.h"
 #include "tools.h"
+#include "variables.h"
 
 Bounce bounce = Bounce();
 
 HardwareSerial Serial2(PA3, PA2);
 
-static int32_t readVref();
-static int32_t readTempSensor(int32_t VRef);
 
 void serialEvent();
 // void serialEvent3();
@@ -52,33 +51,7 @@ void serialEventRun(void) {
   // #endif
 }
 
-unsigned long loopDelay_on = millis();
-unsigned long loopDelay_int_temp = millis();
-unsigned long loopDelay_bit_alive = millis();
-unsigned long loopDelay_count_alive = millis();
 
-bool bt_enabled = false;
-bool bt_connected = false;
-bool bt_alive = false;
-bool first_loop = true;
-bool run_enabled = false;
-
-int tim_alive = 0;
-int tim_conn = 0;
-int tim_sleep = 0;
-
-String line = "";
-String line1 = "";
-String line2 = "";
-bool stringComplete = false;
-bool string1Complete = false;
-bool string2Complete = false;
-
-int32_t VRef;
-float intTemp;
-float batLevel;
-
-volatile int repetitions = 1;
 
 // TIM_TypeDef *Instance = TIM1;
 // TIM_TypeDef *Instance3 = TIM3;
