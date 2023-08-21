@@ -35,7 +35,7 @@ void dig_input_begin() { pinMode(BT_POWER, INPUT_PULLUP); }
 
 void check_button(int btn, int dur) {
   Serial.println("btn");
-  digitalWrite(ESP_WKP, 0);
+  digitalWrite(ESP_WKP, LOW);
   
   delay(200);
   LowPower.shutdown();
@@ -45,5 +45,5 @@ void wakeUP_fun() {
   Serial.println("sleep 3");
   tim_sleep = 0;
 //   detachInterrupt(BT_POWER);
-  digitalWrite(ESP_WKP, 1);
+  digitalWrite(ESP_WKP, HIGH);
 }

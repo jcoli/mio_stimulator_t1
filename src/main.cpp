@@ -100,6 +100,8 @@ void setup() {
   tim3->setOverflow(20, HERTZ_FORMAT);
   tim3->attachInterrupt(Update_Tim3_callback);
   tim3->resume();
+  // delay(5000);
+  Serial.println("setup");
 
 }
 
@@ -151,7 +153,11 @@ void loop() {
 
     if ((tim_sleep >= SHUTDOWN_INTERVAL_MS) && (!bt_connected)) {
       // Serial.println("sleep 1");
-      digitalWrite(ESP_WKP, 0);
+      digitalWrite(ESP_WKP, LOW);
+      digitalWrite(STATUS_LED, LOW);
+      digitalWrite(BAT_LED, LOW);
+      digitalWrite(RUN_LED, LOW);
+      delay(100);
       LowPower.shutdown(0);
     }else if (bt_connected){
       // Serial.print("sleep2: ");
