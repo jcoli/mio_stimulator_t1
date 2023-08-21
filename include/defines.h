@@ -42,6 +42,6 @@ static const char processor[] = "STM32F401CC";
 #define TIMER_INTERVAL_MS             100
 #define HW_TIMER_INTERVAL_MS          50
 
-#define SHUTDOWN_INTERVAL_MS          15000
+#define SHUTDOWN_INTERVAL_MS          90000
 
 #endif
