@@ -36,6 +36,8 @@ bool string2Complete = false;
 int32_t VRef;
 float intTemp;
 float batLevel;
+float batCel1Level;
+float batCel2Level;
 
 volatile int repetitions = 1;
 

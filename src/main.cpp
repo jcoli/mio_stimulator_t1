@@ -84,14 +84,14 @@ void setup() {
 
   tim1->setMode(1, TIMER_OUTPUT_COMPARE_PWM1, PA8);
   tim1->setOverflow(100, MICROSEC_FORMAT); // 100000 microseconds = 100 milliseconds
-  tim1->setCaptureCompare(1, 1000, RESOLUTION_12B_COMPARE_FORMAT); 
+  tim1->setCaptureCompare(1, 2000, RESOLUTION_12B_COMPARE_FORMAT); 
   tim1->resume();
   tim2->setMode(1, TIMER_OUTPUT_COMPARE_PWM1, PA5);
   tim2->setMode(2, TIMER_OUTPUT_COMPARE_PWM2, PB3);
   // tim2->setPrescaleFactor(8); // Due to setOverflow with MICROSEC_FORMAT, prescaler will be computed automatically based on timer input clock
   tim2->setOverflow(85, HERTZ_FORMAT); // 100000 microseconds = 100 milliseconds
-  tim2->setCaptureCompare(1, 10, RESOLUTION_12B_COMPARE_FORMAT); 
-  tim2->setCaptureCompare(2, 10, RESOLUTION_12B_COMPARE_FORMAT); 
+  tim2->setCaptureCompare(1, 30, RESOLUTION_12B_COMPARE_FORMAT); 
+  tim2->setCaptureCompare(2, 30, RESOLUTION_12B_COMPARE_FORMAT); 
   // tim2->attachInterrupt(Update_IT_callback);
   // tim2->attachInterrupt(2, Compare_IT_callback);
   tim2->resume();

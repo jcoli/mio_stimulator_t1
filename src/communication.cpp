@@ -38,6 +38,8 @@ extern String retMsg5[5];
 extern int32_t VRef;
 extern float intTemp;
 extern float batLevel;
+extern float batCel1Level;
+extern float batCel2Level;
 
 void bt_init(){
     // Serial.println("bt_init");
@@ -81,6 +83,8 @@ void sendMsgTimer(){
     // Serial.print("send: ");
     delay(50);
     Serial2.print("ba,0,0," + String(batLevel) + ",#");
+    Serial2.print("c1,0,0," + String(batCel1Level) + ",#");
+    Serial2.print("c2,0,0," + String(batCel2Level) + ",#");
 }
 
 void sendMsg(String s){

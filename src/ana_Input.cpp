@@ -31,6 +31,8 @@ extern String retMsg5[5];
 
 extern int32_t VRef;
 extern float batLevel;
+extern float batCel1Level;
+extern float batCel2Level;
 
 void ana_input_begin(){
     analogReadResolution(12);
@@ -39,8 +41,11 @@ void ana_input_begin(){
 }
 
 void read_analog(){
-    float bat = analogRead(BAT_VOLT);
-    batLevel = (map(bat, 0, 4095, 0, 10300));    
+    float cel1 = analogRead(BAT_CEL1);
+    float cel2 = analogRead(BAT_CEL2);
+    batCel1Level = (map(cel1, 0, 4095, 0, 10300));    
+    batCel2Level = (map(cel2, 0, 4095, 0, 10300));    
+    batLevel = batCel1Level+batCel2Level;
     // Serial.print("BatLevel ");
     // Serial.print(batLevel);
     // Serial.print(" - ");

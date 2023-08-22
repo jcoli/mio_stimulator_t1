@@ -31,8 +31,8 @@ STM32F401 - Mio Stimulation
 
 
 //Ana Input
-#define BAT_CEL     PB0
-#define BAT_VOLT    PB1
+#define BAT_CEL1    PB0
+#define BAT_CEL2    PB1
 
 
 #endif
