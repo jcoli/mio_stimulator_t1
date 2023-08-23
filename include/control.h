@@ -16,5 +16,6 @@ void decoder_two();
 void decoder_three();
 void decoder_four();
 void decoder_five();
+void pulse_output();
 
 #endif

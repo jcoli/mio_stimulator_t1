@@ -43,11 +43,17 @@ void ana_input_begin(){
 void read_analog(){
     float cel1 = analogRead(BAT_CEL1);
     float cel2 = analogRead(BAT_CEL2);
-    batCel1Level = (map(cel1, 0, 4095, 0, 10300));    
-    batCel2Level = (map(cel2, 0, 4095, 0, 10300));    
+    batCel1Level = (map(cel1, 0, 4095, 0, 5000));    
+    batCel2Level = (map(cel2, 0, 4095, 0, 5000));    
     batLevel = batCel1Level+batCel2Level;
-    // Serial.print("BatLevel ");
-    // Serial.print(batLevel);
-    // Serial.print(" - ");
-    // Serial.println(bat);
+    Serial.print("BatLevel ");
+    Serial.print(batLevel);
+    Serial.print(" - ");
+    Serial.print(cel1);
+    Serial.print(" - ");
+    Serial.print(batCel1Level);
+    Serial.print(" - ");
+    Serial.print(cel2);
+    Serial.print(" - ");
+    Serial.println(batCel2Level);
 }

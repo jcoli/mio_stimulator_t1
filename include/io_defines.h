@@ -17,22 +17,22 @@ STM32F401 - Mio Stimulation
 #define RUN_LED     PC14
 #define BAT_LED     PC15
 // #define BUZZER_PIN  PB15
-#define ESP_WKP     PA1
+#define ESP_WKP     PA8
 
 //Pulses
-// #define PULSE_0     PA15
-// #define PULSE_1     PB13
-// #define PULSE_2     PB14
-// #define PULSE_3     PB15
-// #define PULSE_4     PA8
-// #define PULSE_5     PA9
-// #define PULSE_6     PA10
-// #define PULSE_7     PA11
+#define PULSE_0     PB0
+#define PULSE_1     PB1
+#define PULSE_2     PB2
+#define PULSE_3     PB3
+#define PULSE_4     PB4
+#define PULSE_5     PB5
+#define PULSE_6     PB6
+#define PULSE_7     PB7
 
 
 //Ana Input
-#define BAT_CEL1    PB0
-#define BAT_CEL2    PB1
+#define BAT_CEL1    PA6
+#define BAT_CEL2    PA7
 
 
 #endif

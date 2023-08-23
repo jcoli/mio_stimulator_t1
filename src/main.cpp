@@ -82,17 +82,19 @@ void setup() {
   LowPower.begin();
   LowPower.attachInterruptWakeup(BT_POWER, wakeUP_fun, RISING, SHUTDOWN_MODE);
 
-  tim1->setMode(1, TIMER_OUTPUT_COMPARE_PWM1, PA8);
-  tim1->setOverflow(100, MICROSEC_FORMAT); // 100000 microseconds = 100 milliseconds
-  tim1->setCaptureCompare(1, 2000, RESOLUTION_12B_COMPARE_FORMAT); 
-  tim1->resume();
+  
+
+  // tim1->setMode(1, TIMER_OUTPUT_COMPARE_PWM1, PA8);
+  // tim1->setOverflow(100, MICROSEC_FORMAT); // 100000 microseconds = 100 milliseconds
+  // tim1->setCaptureCompare(1, 2000, RESOLUTION_12B_COMPARE_FORMAT); 
+  // tim1->resume();
   tim2->setMode(1, TIMER_OUTPUT_COMPARE_PWM1, PA5);
-  tim2->setMode(2, TIMER_OUTPUT_COMPARE_PWM2, PB3);
+  tim2->setMode(2, TIMER_OUTPUT_COMPARE_PWM1, PA1_ALT1);
   // tim2->setPrescaleFactor(8); // Due to setOverflow with MICROSEC_FORMAT, prescaler will be computed automatically based on timer input clock
   tim2->setOverflow(85, HERTZ_FORMAT); // 100000 microseconds = 100 milliseconds
   tim2->setCaptureCompare(1, 30, RESOLUTION_12B_COMPARE_FORMAT); 
   tim2->setCaptureCompare(2, 30, RESOLUTION_12B_COMPARE_FORMAT); 
-  // tim2->attachInterrupt(Update_IT_callback);
+  tim2->attachInterrupt(pulse_output);
   // tim2->attachInterrupt(2, Compare_IT_callback);
   tim2->resume();
  
@@ -179,17 +181,11 @@ void loop() {
 
 void Update_Tim3_callback() {
   digitalWrite(STATUS_LED, !digitalRead(STATUS_LED));
+ 
+
 }
 
-void Update_IT_callback()
-{ // Update event correspond to Rising edge of PWM when configured in PWM1 mode
-  digitalWrite(STATUS_LED, LOW); // pin2 will be complementary to pin
-}
 
-void Compare_IT_callback()
-{ // Compare match event correspond to falling edge of PWM when configured in PWM1 mode
-  digitalWrite(STATUS_LED, HIGH);
-}
 
 
 

@@ -22,7 +22,17 @@ void dig_output_begin(){
     pinMode(RUN_LED, OUTPUT);
     pinMode(BAT_LED, OUTPUT);
     pinMode(ESP_WKP, OUTPUT);
+    pinMode(PULSE_0, OUTPUT);
+    pinMode(PULSE_1, OUTPUT);
+    pinMode(PULSE_2, OUTPUT);
+    pinMode(PULSE_3, OUTPUT);
+    pinMode(PULSE_4, OUTPUT);
+    pinMode(PULSE_5, OUTPUT);
+    pinMode(PULSE_6, OUTPUT);
+    pinMode(PULSE_7, OUTPUT);
     digitalWrite(ESP_WKP,HIGH);
+    GPIOB->OSPEEDR = 0x03;
+    // GPIOB->MODER = 0x5555;
     
 
 }

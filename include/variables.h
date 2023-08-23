@@ -22,6 +22,8 @@ bool bt_alive = false;
 bool first_loop = true;
 bool run_enabled = false;
 
+bool test = false;
+
 int tim_alive = 0;
 int tim_conn = 0;
 int tim_sleep = 0;

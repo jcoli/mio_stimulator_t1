@@ -20,10 +20,13 @@ void decoder_two();
 void decoder_three();
 void decoder_four();
 void decoder_five();
+void pulse_output();
 
 extern bool bt_enabled;
 extern bool bt_connected;
 extern bool bt_alive;
+
+extern bool test;
 
 extern int tim_alive;
 extern int tim_conn;
@@ -36,6 +39,118 @@ extern String retMsg5[5];
 
 // extern HardwareTimer *Tim1;
 extern HardwareTimer *tim3;
+
+void pulse_output(){
+    // digitalWrite(PULSE_0, !digitalRead(PULSE_0));
+
+    // digitalWrite(PULSE_0, 1);
+    // digitalWrite(PULSE_0, 0);
+    // digitalWrite(PULSE_0, 1);
+    // digitalWrite(PULSE_0, 0);
+    // digitalWrite(PULSE_0, 1);
+    // digitalWrite(PULSE_0, 0);
+    if (test){
+        GPIOB->BSRR = (1 << 0);
+        GPIOB->BSRR = (1 << 1);
+        GPIOB->BSRR = (1 << 2);
+        GPIOB->BSRR = (1 << 3);
+        GPIOB->BSRR = (1 << 4);
+        GPIOB->BSRR = (1 << 5);
+        GPIOB->BSRR = (1 << 6);
+        GPIOB->BSRR = (1 << 7);
+        delayMicroseconds(12);
+        GPIOB->BSRR = ((1 << 0) << 16);
+        GPIOB->BSRR = ((1 << 1) << 16);
+        GPIOB->BSRR = ((1 << 2) << 16);
+        GPIOB->BSRR = ((1 << 3) << 16);
+        GPIOB->BSRR = ((1 << 4) << 16);
+        GPIOB->BSRR = ((1 << 5) << 16);
+        GPIOB->BSRR = ((1 << 6) << 16);
+        GPIOB->BSRR = ((1 << 7) << 16);
+        delayMicroseconds(12);
+        GPIOB->BSRR = (1 << 0);
+        GPIOB->BSRR = (1 << 1);
+        GPIOB->BSRR = (1 << 2);
+        GPIOB->BSRR = (1 << 3);
+        GPIOB->BSRR = (1 << 4);
+        GPIOB->BSRR = (1 << 5);
+        GPIOB->BSRR = (1 << 6);
+        GPIOB->BSRR = (1 << 7);
+        delayMicroseconds(12);
+        GPIOB->BSRR = ((1 << 0) << 16);
+        GPIOB->BSRR = ((1 << 1) << 16);
+        GPIOB->BSRR = ((1 << 2) << 16);
+        GPIOB->BSRR = ((1 << 3) << 16);
+        GPIOB->BSRR = ((1 << 4) << 16);
+        GPIOB->BSRR = ((1 << 5) << 16);
+        GPIOB->BSRR = ((1 << 6) << 16);
+        GPIOB->BSRR = ((1 << 7) << 16);
+        delayMicroseconds(12);
+        GPIOB->BSRR = (1 << 0);
+        GPIOB->BSRR = (1 << 1);
+        GPIOB->BSRR = (1 << 2);
+        GPIOB->BSRR = (1 << 3);
+        GPIOB->BSRR = (1 << 4);
+        GPIOB->BSRR = (1 << 5);
+        GPIOB->BSRR = (1 << 6);
+        GPIOB->BSRR = (1 << 7);
+        delayMicroseconds(12);
+        GPIOB->BSRR = ((1 << 0) << 16);
+        GPIOB->BSRR = ((1 << 1) << 16);
+        GPIOB->BSRR = ((1 << 2) << 16);
+        GPIOB->BSRR = ((1 << 3) << 16);
+        GPIOB->BSRR = ((1 << 4) << 16);
+        GPIOB->BSRR = ((1 << 5) << 16);
+        GPIOB->BSRR = ((1 << 6) << 16);
+        GPIOB->BSRR = ((1 << 7) << 16);
+        delayMicroseconds(12);
+        GPIOB->BSRR = (1 << 0);
+        GPIOB->BSRR = (1 << 1);
+        GPIOB->BSRR = (1 << 2);
+        GPIOB->BSRR = (1 << 3);
+        GPIOB->BSRR = (1 << 4);
+        GPIOB->BSRR = (1 << 5);
+        GPIOB->BSRR = (1 << 6);
+        GPIOB->BSRR = (1 << 7);
+        delayMicroseconds(12);
+        GPIOB->BSRR = ((1 << 0) << 16);
+        GPIOB->BSRR = ((1 << 1) << 16);
+        GPIOB->BSRR = ((1 << 2) << 16);
+        GPIOB->BSRR = ((1 << 3) << 16);
+        GPIOB->BSRR = ((1 << 4) << 16);
+        GPIOB->BSRR = ((1 << 5) << 16);
+        GPIOB->BSRR = ((1 << 6) << 16);
+        GPIOB->BSRR = ((1 << 7) << 16);
+        delayMicroseconds(12);
+        GPIOB->BSRR = (1 << 0);
+        GPIOB->BSRR = (1 << 1);
+        GPIOB->BSRR = (1 << 2);
+        GPIOB->BSRR = (1 << 3);
+        GPIOB->BSRR = (1 << 4);
+        GPIOB->BSRR = (1 << 5);
+        GPIOB->BSRR = (1 << 6);
+        GPIOB->BSRR = (1 << 7);
+        delayMicroseconds(12);
+        GPIOB->BSRR = ((1 << 0) << 16);
+        GPIOB->BSRR = ((1 << 1) << 16);
+        GPIOB->BSRR = ((1 << 2) << 16);
+        GPIOB->BSRR = ((1 << 3) << 16);
+        GPIOB->BSRR = ((1 << 4) << 16);
+        GPIOB->BSRR = ((1 << 5) << 16);
+        GPIOB->BSRR = ((1 << 6) << 16);
+        GPIOB->BSRR = ((1 << 7) << 16);
+    }else{
+        // GPIOB->BSRR = ((1 << 4));
+    }
+    
+    test = !test;
+    // GPIOB->BSRR = (1 << 3);
+    // GPIOB->BSRR = ((1 << 3) << 16);
+    // GPIOB->BSRR = (1 << 3);
+    // GPIOB->BSRR = ((1 << 3) << 16);
+    
+}
+
 
 void on_bit_alive(){
     if (!bt_alive){
