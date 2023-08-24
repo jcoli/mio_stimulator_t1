@@ -143,7 +143,7 @@ void pulse_output(){
         // GPIOB->BSRR = ((1 << 4));
     }
     
-    test = !test;
+    // test = !test;
     // GPIOB->BSRR = (1 << 3);
     // GPIOB->BSRR = ((1 << 3) << 16);
     // GPIOB->BSRR = (1 << 3);
