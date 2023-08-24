@@ -19,6 +19,7 @@ STM32F401 - Mio Stimulation
 #include "io_defines.h"
 #include "tools.h"
 #include "variables.h"
+#include "pulse_control.h"
 
 Bounce bounce = Bounce();
 

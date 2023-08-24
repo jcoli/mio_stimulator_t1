@@ -12,6 +12,13 @@ STM32F401 - Mio Stimulation
 #include "tools.h"
 #include "communication.h"
 
+void pulse_init();
+void pulse_control();
+void pulse_block();
+void stepUp_init();
+void stepUp_control();
+void stepUp_block();
+
 extern bool bt_enabled;
 extern bool bt_connected;
 extern bool bt_alive;
@@ -26,3 +33,24 @@ extern int tim_sleep;
 void pulse_init(){
     
 }
+
+void pulse_control(){
+    
+}
+
+void pulse_block(){
+    
+}
+
+void stepUp_init(){
+    
+}
+
+void stepUp_control(){
+    
+}
+
+void stepUp_block(){
+    
+}
+
