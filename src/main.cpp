@@ -77,6 +77,7 @@ void setup() {
   dig_output_begin();
   dig_input_begin();
   ana_input_begin();
+  pulse_init();
   bounce.attach(BT_POWER, INPUT_PULLDOWN);
   bounce.interval(5);
 
@@ -95,7 +96,7 @@ void setup() {
   tim2->setOverflow(85, HERTZ_FORMAT); // 100000 microseconds = 100 milliseconds
   tim2->setCaptureCompare(1, 30, RESOLUTION_12B_COMPARE_FORMAT); 
   tim2->setCaptureCompare(2, 30, RESOLUTION_12B_COMPARE_FORMAT); 
-  tim2->attachInterrupt(pulse_output);
+  tim2->attachInterrupt(pulse_control_dev);
   // tim2->attachInterrupt(2, Compare_IT_callback);
   tim2->resume();
  

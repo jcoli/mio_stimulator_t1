@@ -14,6 +14,8 @@ void pulse_block();
 void stepUp_init();
 void stepUp_control();
 void stepUp_block();
+void pulse_control_dev();
+void pulse_init_dev();
 
 
 #endif
