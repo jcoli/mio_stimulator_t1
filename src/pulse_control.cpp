@@ -123,23 +123,23 @@ void pulse_control_dev(){
     int ch[8] = {0,0,0,0,0,0,0,0};
 
     for (int i = 0; i<25; i++){
-        if (ch[0]<intensity_ch0) GPIOB->BSRR = (1 << 0);
-        if (ch[1]<intensity_ch1) GPIOB->BSRR = (1 << 1);
-        if (ch[2]<intensity_ch2) GPIOB->BSRR = (1 << 2);
-        if (ch[3]<intensity_ch3) GPIOB->BSRR = (1 << 3);
-        if (ch[4]<intensity_ch4) GPIOB->BSRR = (1 << 4);
-        if (ch[5]<intensity_ch5) GPIOB->BSRR = (1 << 5);
-        if (ch[6]<intensity_ch6) GPIOB->BSRR = (1 << 6);
-        if (ch[7]<intensity_ch7) GPIOB->BSRR = (1 << 7);
+        if (ch[0]<intensity_ch0 && active_ch0 && detect_ch0) GPIOB->BSRR = (1 << 0);
+        if (ch[1]<intensity_ch1 && active_ch1 && detect_ch1) GPIOB->BSRR = (1 << 1);
+        if (ch[2]<intensity_ch2 && active_ch2 && detect_ch2) GPIOB->BSRR = (1 << 2);
+        if (ch[3]<intensity_ch3 && active_ch3 && detect_ch3) GPIOB->BSRR = (1 << 3);
+        if (ch[4]<intensity_ch4 && active_ch4 && detect_ch4) GPIOB->BSRR = (1 << 4);
+        if (ch[5]<intensity_ch5 && active_ch5 && detect_ch5) GPIOB->BSRR = (1 << 5);
+        if (ch[6]<intensity_ch6 && active_ch6 && detect_ch6) GPIOB->BSRR = (1 << 6);
+        if (ch[7]<intensity_ch7 && active_ch7 && detect_ch7) GPIOB->BSRR = (1 << 7);
         delayMicroseconds(12);
-        if (ch[0]<=intensity_ch0) GPIOB->BSRR = ((1 << 0) << 16);
-        if (ch[1]<=intensity_ch1) GPIOB->BSRR = ((1 << 1) << 16);
-        if (ch[2]<=intensity_ch2) GPIOB->BSRR = ((1 << 2) << 16);
-        if (ch[3]<=intensity_ch3) GPIOB->BSRR = ((1 << 3) << 16);
-        if (ch[4]<=intensity_ch4) GPIOB->BSRR = ((1 << 4) << 16);
-        if (ch[5]<=intensity_ch5) GPIOB->BSRR = ((1 << 5) << 16);
-        if (ch[6]<=intensity_ch6) GPIOB->BSRR = ((1 << 6) << 16);
-        if (ch[7]<=intensity_ch7) GPIOB->BSRR = ((1 << 7) << 16);
+        if (ch[0]<=intensity_ch0 && active_ch0 && detect_ch0) GPIOB->BSRR = ((1 << 0) << 16);
+        if (ch[1]<=intensity_ch1 && active_ch1 && detect_ch1) GPIOB->BSRR = ((1 << 1) << 16);
+        if (ch[2]<=intensity_ch2 && active_ch2 && detect_ch2) GPIOB->BSRR = ((1 << 2) << 16);
+        if (ch[3]<=intensity_ch3 && active_ch3 && detect_ch3) GPIOB->BSRR = ((1 << 3) << 16);
+        if (ch[4]<=intensity_ch4 && active_ch4 && detect_ch4) GPIOB->BSRR = ((1 << 4) << 16);
+        if (ch[5]<=intensity_ch5 && active_ch5 && detect_ch5) GPIOB->BSRR = ((1 << 5) << 16);
+        if (ch[6]<=intensity_ch6 && active_ch6 && detect_ch6) GPIOB->BSRR = ((1 << 6) << 16);
+        if (ch[7]<=intensity_ch7 && active_ch7 && detect_ch7) GPIOB->BSRR = ((1 << 7) << 16);
         delayMicroseconds(12);
         for (int x = 0; x<8; x++) {
             ch[x]++;
