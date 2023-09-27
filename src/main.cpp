@@ -26,6 +26,8 @@ Bounce bounce = Bounce();
 HardwareSerial Serial2(PA3, PA2);
 
 
+
+
 void serialEvent();
 // void serialEvent3();
 void serialEvent2();
@@ -105,6 +107,8 @@ void setup() {
   tim3->resume();
   // delay(5000);
   Serial.println("setup");
+
+  
 
 }
 
