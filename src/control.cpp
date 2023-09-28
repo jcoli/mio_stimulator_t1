@@ -127,6 +127,19 @@ void decoder_four(){
             // Serial.println("decoder_four - 3");
         } 
     }
+    if (retMsg4[0].equals("7")){
+        Serial.println("split: "+ retMsg4[0] + " - " +retMsg4[1] + " - " + retMsg4[2] + " - " + retMsg4[3]);
+        if(retMsg4[3].equals("1")){
+            Serial.println("Enabled - " + retMsg4[2]);
+        }
+        if(retMsg4[3].equals("0")){
+                Serial.println("Disabled - " + retMsg4[2]);
+        } 
+    }
+    if (retMsg4[0].equals("8")){
+        Serial.println("split: "+ retMsg4[0] + " - " +retMsg4[1] + " - " + retMsg4[2] + " - " + retMsg4[3]);
+    }    
+    
     if (retMsg4[0].equals("ru")){
         if(retMsg4[3].equals("1")){
             Serial2.println("ru,0,0,1,#");
