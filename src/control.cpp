@@ -105,20 +105,20 @@ void decoder_three(){
 void decoder_four(){
     // Serial.println("decoder_four a");
     // Serial.println("split: "+ retMsg4[0] + " - " +retMsg4[1] + " - " + retMsg4[2] + " - " + retMsg4[3]);
-    if ((retMsg4[0].equals("re") && (retMsg4[3].equals("1"))) && (!bt_connected)){
+    if ((retMsg4[0].equals("1") && (retMsg4[3].equals("1"))) && (!bt_connected)){   //re
         tim3->setOverflow(10, HERTZ_FORMAT);
         bt_enabled = true;
         bt_alive = true;
         tim_alive = 0;
         // Serial.println("decoder_four - 1");
     }
-    if (retMsg4[0].equals("co")){
+    if (retMsg4[0].equals("0")){ //connect - bit alive
         if(retMsg4[3].equals("1")){
             tim3->setOverflow(1, HERTZ_FORMAT);
             bt_connected = true;
             tim_conn = 0;
             tim_sleep = 0;
-            Serial2.print("co,0,0,1,#");
+            Serial2.print("0,0,0,1,#");
         }
         if(retMsg4[3].equals("0")){
             tim3->setOverflow(10, HERTZ_FORMAT);
@@ -127,7 +127,7 @@ void decoder_four(){
             // Serial.println("decoder_four - 3");
         } 
     }
-    if (retMsg4[0].equals("7")){
+    if (retMsg4[0].equals("7")){ //ch enabled
         Serial.println("split: "+ retMsg4[0] + " - " +retMsg4[1] + " - " + retMsg4[2] + " - " + retMsg4[3]);
         if(retMsg4[3].equals("1")){
             Serial.println("Enabled - " + retMsg4[2]);
@@ -136,17 +136,18 @@ void decoder_four(){
                 Serial.println("Disabled - " + retMsg4[2]);
         } 
     }
-    if (retMsg4[0].equals("8")){
-        Serial.println("split: "+ retMsg4[0] + " - " +retMsg4[1] + " - " + retMsg4[2] + " - " + retMsg4[3]);
+    if (retMsg4[0].equals("8")){ //decrease & increase
+        Serial.print("split: "+ retMsg4[0] + " - " +retMsg4[1] + " - " + retMsg4[2] + " - " + retMsg4[3]);
+        Serial.println(" - Decrease/Increase");
     }    
     
-    if (retMsg4[0].equals("ru")){
+    if (retMsg4[0].equals("3")){   //run
         if(retMsg4[3].equals("1")){
-            Serial2.println("ru,0,0,1,#");
+            Serial2.println("3,0,0,1,#");
             Serial.println("run");
         }
         if(retMsg4[3].equals("0")){
-            Serial2.println("ru,0,0,0,#");
+            Serial2.println("3,0,0,0,#");
             Serial.println("not run");
         } 
     }

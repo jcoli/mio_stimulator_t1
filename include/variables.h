@@ -43,11 +43,15 @@ float batCel2Level;
 
 volatile int repetitions = 1;
 
+//Channels
 bool active_ch[8];
 bool detect_ch[8];
 int intensity_ch[8];
 
-// Channel Struct
+//trainning frequency
+int tr_freq[4];
+
+
 
 
 
