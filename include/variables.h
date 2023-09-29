@@ -48,12 +48,13 @@ bool active_ch[8];
 bool detect_ch[8];
 int intensity_ch[8];
 
-//trainning frequency
+//trainning
+String id_training;
 int tr_freq[4];
-
-
-
-
+int timeActive;
+int timePause;
+int timeTraining;
+int typeCurve;
 
 
 #endif

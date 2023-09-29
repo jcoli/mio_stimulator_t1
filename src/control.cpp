@@ -59,7 +59,7 @@ void on_bit_connected(){
     if (!bt_connected){
         tim3->setOverflow(10, HERTZ_FORMAT);
         tim_conn = 0;
-        Serial2.print("co,0,0,1,#");
+        Serial2.print("0,0,0,1,#");
         // Serial.println("on_bit_conn");
     }
 }

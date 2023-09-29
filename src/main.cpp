@@ -121,7 +121,7 @@ void loop() {
     // Serial2.print("teste#");
   }
 
-  if (millis() - loopDelay_int_temp > 7000) {
+  if (millis() - loopDelay_int_temp > 15000) {
     loopDelay_int_temp = millis();
     read_analog();
     VRef = readVref();
@@ -132,8 +132,9 @@ void loop() {
     // Serial.println(VRef, DEC);
     // Serial.print("Temp: ");
     // Serial.println(intTemp);
-    sendMsgTimer();
-    
+    if (bt_connected){
+      sendMsgTimer();
+    }
     // delay(30);
     // Serial2.println("co,0,0,1,#");
     // if (Tim1->isRunning()){

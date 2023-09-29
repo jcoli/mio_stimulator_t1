@@ -28,7 +28,7 @@ STM32F401 - Mio Stimulation
 #define LL_ADC_RESOLUTION LL_ADC_RESOLUTION_12B
 #define ADC_RANGE 4096
 
-static const char version[] = "0.0a";
+static const char version[] = "0.0b";
 static const char develop[] =  "jcoli-Tecnocoli";
 static const char email_develop[] = "jcoli@tecnocoli.com.br";
 static const char processor[] = "STM32F401CC";
