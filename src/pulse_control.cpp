@@ -20,6 +20,8 @@ void stepUp_control();
 void stepUp_block();
 void pulse_control_dev();
 void pulse_init_dev();
+void channel_intensity();
+void enable_channel();
 
 extern bool bt_enabled;
 extern bool bt_connected;
@@ -29,10 +31,11 @@ extern int tim_alive;
 extern int tim_conn;
 extern int tim_sleep;
 
-
 extern bool active_ch[8];
 extern bool detect_ch[8];
 extern int intensity_ch[8];
+
+extern String retMsg4[4];
 
 
 void pulse_init(){
@@ -46,21 +49,37 @@ void pulse_init(){
     pinMode(PULSE_7, OUTPUT);
     GPIOB->OSPEEDR = 0x03;
     pulse_init_dev();
-    
 }
 
 void pulse_init_dev(){
-    
     for (int i = 0; i<8; i++ ){
-        active_ch[i] = true;
+        active_ch[i] = false;
         detect_ch[i] = true;
-        intensity_ch[i] = 15;
+        intensity_ch[i] = 1;
     }
-
 }
 
 void pulse_control(){
-    
+}
+
+void enable_channel(){
+    if (retMsg4[0].equals("7")) {
+        int mChannel = retMsg4[2].toInt();
+        if (retMsg4[3] == "1"){
+            active_ch[mChannel] = true;
+        }else{
+            active_ch[mChannel] = false;    
+        }    
+    }
+}
+
+void channel_intensity(){
+    if (retMsg4[0].equals("8")) {
+        int mChannel = retMsg4[2].toInt();
+        intensity_ch[mChannel] = retMsg4[3].toInt();
+        Serial.print("Intensity: ");
+        Serial.println(retMsg4[3]);
+    }
 }
 
 void pulse_control_dev(){
@@ -81,26 +100,17 @@ void pulse_control_dev(){
                 ch[x]++;
         }
     }    
-
-    
-    
 }
 
-
-
 void pulse_block(){
-    
 }
 
 void stepUp_init(){
-    
 }
 
 void stepUp_control(){
-    
 }
 
 void stepUp_block(){
-    
 }
 

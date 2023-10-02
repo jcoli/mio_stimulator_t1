@@ -16,6 +16,8 @@ void stepUp_control();
 void stepUp_block();
 void pulse_control_dev();
 void pulse_init_dev();
+void channel_intensity();
+void enable_channel();
 
 
 #endif

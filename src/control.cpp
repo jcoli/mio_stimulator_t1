@@ -11,6 +11,7 @@ STM32F401 - Mio Stimulation
 #include "io_defines.h"
 #include "tools.h"
 #include "communication.h"
+#include "pulse_control.h"
 
 void on_receive(int mSize);
 void on_bit_alive();
@@ -128,17 +129,11 @@ void decoder_four(){
         } 
     }
     if (retMsg4[0].equals("7")){ //ch enabled
-        Serial.println("split: "+ retMsg4[0] + " - " +retMsg4[1] + " - " + retMsg4[2] + " - " + retMsg4[3]);
-        if(retMsg4[3].equals("1")){
-            Serial.println("Enabled - " + retMsg4[2]);
-        }
-        if(retMsg4[3].equals("0")){
-                Serial.println("Disabled - " + retMsg4[2]);
-        } 
+        enable_channel();
+        
     }
     if (retMsg4[0].equals("8")){ //decrease & increase
-        Serial.print("split: "+ retMsg4[0] + " - " +retMsg4[1] + " - " + retMsg4[2] + " - " + retMsg4[3]);
-        Serial.println(" - Decrease/Increase");
+        channel_intensity();
     }    
     
     if (retMsg4[0].equals("3")){   //run
