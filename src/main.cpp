@@ -116,9 +116,6 @@ void loop() {
 
   if (millis() - loopDelay_on > 20000) {
     loopDelay_on = millis();
-    // Serial.println("button1");
-    // Serial2.print("AT+NAME=TEC2");
-    // Serial2.print("teste#");
   }
 
   if (millis() - loopDelay_int_temp > 15000) {
@@ -126,31 +123,15 @@ void loop() {
     read_analog();
     VRef = readVref();
     intTemp = readTempSensor(VRef);
-    // Serial.print("VRef: ");
-    // Serial.println(VRef);
     VRef = map(VRef, 0, 4095, 0, 500);
-    // Serial.println(VRef, DEC);
-    // Serial.print("Temp: ");
-    // Serial.println(intTemp);
     if (bt_connected){
       sendMsgTimer();
     }
-    // delay(30);
-    // Serial2.println("co,0,0,1,#");
-    // if (Tim1->isRunning()){
-    //   Tim1->pause();
-    // }else{
-    //   Tim1->resume();
-    // }
-    
-    
   }
 
   if (millis() - loopDelay_bit_alive > 2000) {
     loopDelay_bit_alive = millis();
-    // Serial.print("sleep: ");
-    // Serial.println(tim_sleep);
-    if ((tim_alive >= 100) && !(bt_connected)) {
+    if ((tim_alive >= 500) && !(bt_connected)) {
       bt_alive = false;
       on_bit_alive();
     }
@@ -160,7 +141,6 @@ void loop() {
     }
 
     if ((tim_sleep >= SHUTDOWN_INTERVAL_MS) && (!bt_connected)) {
-      // Serial.println("sleep 1");
       digitalWrite(ESP_WKP, LOW);
       digitalWrite(STATUS_LED, LOW);
       digitalWrite(BAT_LED, LOW);
@@ -168,8 +148,6 @@ void loop() {
       delay(100);
       LowPower.shutdown(0);
     }else if (bt_connected){
-      // Serial.print("sleep2: ");
-      // Serial.println(tim_sleep);
       tim_sleep=0;  
     }
   }

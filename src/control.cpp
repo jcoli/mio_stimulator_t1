@@ -26,6 +26,7 @@ void pulse_output();
 extern bool bt_enabled;
 extern bool bt_connected;
 extern bool bt_alive;
+extern bool run_enabled;
 
 extern bool test;
 
@@ -51,8 +52,9 @@ void on_bit_alive(){
     if (!bt_alive){
         tim3->setOverflow(20, HERTZ_FORMAT);
         bt_enabled = false;
+        bt_alive = true;
         tim_alive = 0;
-        // Serial.println("on_bit_alive");
+        Serial.println("on_bit_alive");
     }
 }
 
@@ -60,8 +62,9 @@ void on_bit_connected(){
     if (!bt_connected){
         tim3->setOverflow(10, HERTZ_FORMAT);
         tim_conn = 0;
+        bt_connected = true;
         Serial2.print("0,0,0,1,#");
-        // Serial.println("on_bit_conn");
+        Serial.println("on_bit_conn");
     }
 }
 
@@ -140,10 +143,12 @@ void decoder_four(){
         if(retMsg4[3].equals("1")){
             Serial2.println("3,0,0,1,#");
             Serial.println("run");
+            run_enabled = true;
         }
         if(retMsg4[3].equals("0")){
             Serial2.println("3,0,0,0,#");
             Serial.println("not run");
+            run_enabled = false;
         } 
     }
 }

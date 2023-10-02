@@ -25,6 +25,7 @@ void enable_channel();
 
 extern bool bt_enabled;
 extern bool bt_connected;
+extern bool run_enabled;
 extern bool bt_alive;
 extern bool test;
 extern int tim_alive;
@@ -36,6 +37,8 @@ extern bool detect_ch[8];
 extern int intensity_ch[8];
 
 extern String retMsg4[4];
+
+extern int global_int;
 
 
 void pulse_init(){
@@ -74,32 +77,46 @@ void enable_channel(){
 }
 
 void channel_intensity(){
+    
     if (retMsg4[0].equals("8")) {
         int mChannel = retMsg4[2].toInt();
         intensity_ch[mChannel] = retMsg4[3].toInt();
         Serial.print("Intensity: ");
-        Serial.println(retMsg4[3]);
+        Serial.print(retMsg4[3]);
+        Serial.print(", - ");
+        Serial.println(retMsg4[2]);
+    }
+    for (int i = 0; i<8; i++){
+        if (intensity_ch[i] > global_int){
+            global_int = intensity_ch[i];
+            Serial.print("Global Intensity: ");
+            Serial.println(global_int);
+        }
     }
 }
 
 void pulse_control_dev(){
 
-    int ch[8] = {0,0,0,0,0,0,0,0};
+    if (bt_connected && run_enabled){
 
-    for (int i = 0; i<25; i++){
-        for (int ind_ch = 0; ind_ch<8; ind_ch++){
-            if (ch[ind_ch]<intensity_ch[ind_ch] && active_ch[ind_ch] && detect_ch[ind_ch]) GPIOB->BSRR = (1 << ind_ch); 
-        }
-        delayMicroseconds(12);
-        for (int ind_ch = 0; ind_ch<8; ind_ch++){   
-            if (ch[ind_ch]<=intensity_ch[ind_ch] && active_ch[ind_ch] && detect_ch[ind_ch]) GPIOB->BSRR = ((1 << ind_ch) << 16);
-           
-        }
-        delayMicroseconds(12);
-        for (int x = 0; x<8; x++) {
-                ch[x]++;
-        }
-    }    
+        int ch[8] = {0,0,0,0,0,0,0,0};
+
+        for (int i = 0; i<25; i++){
+            for (int ind_ch = 0; ind_ch<8; ind_ch++){
+                if (ch[ind_ch]<intensity_ch[ind_ch] && active_ch[ind_ch] && detect_ch[ind_ch]) GPIOB->BSRR = (1 << ind_ch); 
+            }
+            delayMicroseconds(12);
+            for (int ind_ch = 0; ind_ch<8; ind_ch++){   
+                if (ch[ind_ch]<=intensity_ch[ind_ch] && active_ch[ind_ch] && detect_ch[ind_ch]) GPIOB->BSRR = ((1 << ind_ch) << 16);
+            
+            }
+            delayMicroseconds(12);
+            for (int x = 0; x<8; x++) {
+                    ch[x]++;
+            }
+        }    
+    }
+    
 }
 
 void pulse_block(){

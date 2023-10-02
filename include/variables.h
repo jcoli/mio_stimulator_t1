@@ -48,6 +48,8 @@ bool active_ch[8];
 bool detect_ch[8];
 int intensity_ch[8];
 
+int global_int = 0;
+
 //trainning
 String id_training;
 int tr_freq[4];
