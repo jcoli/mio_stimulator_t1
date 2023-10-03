@@ -128,7 +128,7 @@ void decoder_four(){
             tim3->setOverflow(10, HERTZ_FORMAT);
             bt_connected = false;
             tim_conn = 0;
-            // Serial.println("decoder_four - 3");
+            Serial.println("disconnected");
         } 
     }
     if (retMsg4[0].equals("7")){ //ch enabled
@@ -141,12 +141,12 @@ void decoder_four(){
     
     if (retMsg4[0].equals("3")){   //run
         if(retMsg4[3].equals("1")){
-            Serial2.println("3,0,0,1,#");
+            // Serial2.println("3,0,0,1,#");
             Serial.println("run");
             run_enabled = true;
         }
         if(retMsg4[3].equals("0")){
-            Serial2.println("3,0,0,0,#");
+            // Serial2.println("3,0,0,0,#");
             Serial.println("not run");
             run_enabled = false;
         } 

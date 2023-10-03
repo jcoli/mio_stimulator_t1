@@ -81,16 +81,16 @@ void channel_intensity(){
     if (retMsg4[0].equals("8")) {
         int mChannel = retMsg4[2].toInt();
         intensity_ch[mChannel] = retMsg4[3].toInt();
-        Serial.print("Intensity: ");
-        Serial.print(retMsg4[3]);
-        Serial.print(", - ");
-        Serial.println(retMsg4[2]);
+        // Serial.print("Intensity: ");
+        // Serial.print(retMsg4[3]);
+        // Serial.print(", - ");
+        // Serial.println(retMsg4[2]);
     }
     for (int i = 0; i<8; i++){
         if (intensity_ch[i] > global_int){
             global_int = intensity_ch[i];
-            Serial.print("Global Intensity: ");
-            Serial.println(global_int);
+            // Serial.print("Global Intensity: ");
+            // Serial.println(global_int);
         }
     }
 }
