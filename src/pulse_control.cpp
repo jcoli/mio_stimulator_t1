@@ -105,12 +105,12 @@ void pulse_control_dev(){
             for (int ind_ch = 0; ind_ch<8; ind_ch++){
                 if (ch[ind_ch]<intensity_ch[ind_ch] && active_ch[ind_ch] && detect_ch[ind_ch]) GPIOB->BSRR = (1 << ind_ch); 
             }
-            delayMicroseconds(12);
+            delayMicroseconds(190);
             for (int ind_ch = 0; ind_ch<8; ind_ch++){   
                 if (ch[ind_ch]<=intensity_ch[ind_ch] && active_ch[ind_ch] && detect_ch[ind_ch]) GPIOB->BSRR = ((1 << ind_ch) << 16);
             
             }
-            delayMicroseconds(12);
+            delayMicroseconds(50);
             for (int x = 0; x<8; x++) {
                     ch[x]++;
             }
