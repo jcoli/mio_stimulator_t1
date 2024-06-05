@@ -1,7 +1,7 @@
 /**
 Version: 0a
 Tecnocoli - 06/2023
-jcoli - Jeferson Coli - jcoli@teccnocoli.com.br
+jcoli - Jeferson Coli - jcoli@tecnocoli.com.br
 STM32F401 - Mio Stimulation
 **/
 

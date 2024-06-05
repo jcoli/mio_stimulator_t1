@@ -1,7 +1,7 @@
 /**
 Version: 0a
 Tecnocoli - 06/2022
-jcoli - Jeferson Coli - jcoli@teccnocoli.com.br
+jcoli - Jeferson Coli - jcoli@tecnocoli.com.br
 STM32F411 - Clothes Dryer
 **/
 #include <Arduino.h>

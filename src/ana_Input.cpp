@@ -1,7 +1,7 @@
 /**
 Version: 0a
 Tecnocoli - 06/2023
-jcoli - Jeferson Coli - jcoli@teccnocoli.com.br
+jcoli - Jeferson Coli - jcoli@tecnocoli.com.br
 STM32F401 - Mio Stimulation
 **/
 
@@ -33,6 +33,7 @@ extern int32_t VRef;
 extern float batLevel;
 extern float batCel1Level;
 extern float batCel2Level;
+extern float voltOutLevel;
 
 void ana_input_begin(){
     analogReadResolution(12);
@@ -43,8 +44,10 @@ void ana_input_begin(){
 void read_analog(){
     float cel1 = analogRead(BAT_CEL1);
     float cel2 = analogRead(BAT_CEL2);
+    float volt_out = analogRead(VOLT_OUT);
     batCel1Level = (map(cel1, 0, 4095, 0, 5000));    
-    batCel2Level = (map(cel2, 0, 4095, 0, 5000));    
+    batCel2Level = (map(cel2, 0, 4095, 0, 5000));  
+    voltOutLevel = (map(volt_out, 0, 4095, 0, 180000));   
     batLevel = batCel1Level+batCel2Level;
     // Serial.print("BatLevel ");
     // Serial.print(batLevel);

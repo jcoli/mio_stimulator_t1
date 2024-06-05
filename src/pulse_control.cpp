@@ -1,7 +1,7 @@
 /**
 Version: 0a
 Tecnocoli - 06/2023
-jcoli - Jeferson Coli - jcoli@teccnocoli.com.br
+jcoli - Jeferson Coli - jcoli@tecnocoli.com.br
 STM32F401 - Mio Stimulation
 **/
 
@@ -38,7 +38,7 @@ extern int intensity_ch[8];
 
 extern String retMsg4[4];
 
-extern int global_int;
+extern int global_int; 
 
 
 void pulse_init(){
@@ -50,6 +50,10 @@ void pulse_init(){
     pinMode(PULSE_5, OUTPUT);
     pinMode(PULSE_6, OUTPUT);
     pinMode(PULSE_7, OUTPUT);
+
+    pinMode(PWM_STUP, OUTPUT);
+    
+
     GPIOB->OSPEEDR = 0x03;
     pulse_init_dev();
 }

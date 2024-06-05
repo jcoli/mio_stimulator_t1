@@ -1,32 +1,29 @@
 /**
 Version: 0a
 Tecnocoli - 06/2023
-jcoli - Jeferson Coli - jcoli@teccnocoli.com.br
+jcoli - Jeferson Coli - jcoli@tecnocoli.com.br
 STM32F401 - Mio Stimulation
 **/
 
 #include <Arduino.h>
 #include <Bounce2.h>
+#include <HardwareTimer.h>
 #include <STM32LowPower.h>
-#include <HardwareTimer.h> 
 
+#include "ana_Input.h"
 #include "communication.h"
 #include "control.h"
 #include "defines.h"
 #include "dig_input.h"
 #include "dig_output.h"
-#include "ana_Input.h"
 #include "io_defines.h"
+#include "pulse_control.h"
 #include "tools.h"
 #include "variables.h"
-#include "pulse_control.h"
 
 Bounce bounce = Bounce();
 
 HardwareSerial Serial2(PA3, PA2);
-
-
-
 
 void serialEvent();
 // void serialEvent3();
@@ -54,27 +51,37 @@ void serialEventRun(void) {
   // #endif
 }
 
-
-
 // TIM_TypeDef *Instance = TIM1;
 // TIM_TypeDef *Instance3 = TIM3;
 // TIM_TypeDef *Instance4 = TIM4;
 // TIM_TypeDef *Instance9 = TIM9;
 
-// TIM_TypeDef *Instance3 = (TIM_TypeDef *)pinmap_peripheral(digitalPinToPinName(PULSE_0), PinMap_PWM);
-// uint32_t channel = STM_PIN_CHANNEL(pinmap_function(digitalPinToPinName(PULSE_0), PinMap_PWM));
+// TIM_TypeDef *Instance3 = (TIM_TypeDef
+// *)pinmap_peripheral(digitalPinToPinName(PULSE_0), PinMap_PWM); uint32_t
+// channel = STM_PIN_CHANNEL(pinmap_function(digitalPinToPinName(PULSE_0),
+// PinMap_PWM));
 
-HardwareTimer *tim1 = new HardwareTimer(TIM1);
+// TIM_TypeDef *Instance = (TIM_TypeDef
+// *)pinmap_peripheral(digitalPinToPinName(PWM_STUP), PinMap_PWM); TIM_TypeDef
+// *Instance3 = (TIM_TypeDef
+// *)pinmap_peripheral(digitalPinToPinName(STATUS_LED), PinMap_PWM);
+
+// uint32_t channel =
+// STM_PIN_CHANNEL(pinmap_function(digitalPinToPinName(PWM_STUP), PinMap_PWM));
+// uint32_t channel3 =
+// STM_PIN_CHANNEL(pinmap_function(digitalPinToPinName(STATUS_LED),
+// PinMap_PWM)); HardwareTimer *Tim10 = new HardwareTimer(Instance10);
+// HardwareTimer *Tim9 = new HardwareTimer(Instance9);
+
+// HardwareTimer *tim1 = new HardwareTimer(Instance);
 HardwareTimer *tim2 = new HardwareTimer(TIM2);
 HardwareTimer *tim3 = new HardwareTimer(TIM3);
-// HardwareTimer *Tim10 = new HardwareTimer(Instance10);
-// HardwareTimer *Tim9 = new HardwareTimer(Instance9);
 
 void setup() {
   Serial.begin(115200);
-  Serial1.begin(19200);
+  // Serial1.begin(19200);
   Serial2.begin(19200);
-  
+
   delay(1000);
   dig_output_begin();
   dig_input_begin();
@@ -86,36 +93,34 @@ void setup() {
   LowPower.begin();
   LowPower.attachInterruptWakeup(BT_POWER, wakeUP_fun, RISING, SHUTDOWN_MODE);
 
-  
-
-  // tim1->setMode(1, TIMER_OUTPUT_COMPARE_PWM1, PA8);
-  // tim1->setOverflow(100, MICROSEC_FORMAT); // 100000 microseconds = 100 milliseconds
-  // tim1->setCaptureCompare(1, 2000, RESOLUTION_12B_COMPARE_FORMAT); 
+  // tim1->setMode(1, TIMER_OUTPUT_COMPARE_PWM1, PA1);
+  // tim1->setOverflow(100, HERTZ_FORMAT); // 100000 microseconds = 100
+  // milliseconds tim1->setCaptureCompare(channel, 50, PERCENT_COMPARE_FORMAT);
   // tim1->resume();
-  tim2->setMode(1, TIMER_OUTPUT_COMPARE_PWM1, PA5);
-  tim2->setMode(2, TIMER_OUTPUT_COMPARE_PWM1, PA1_ALT1);
-  // tim2->setPrescaleFactor(8); // Due to setOverflow with MICROSEC_FORMAT, prescaler will be computed automatically based on timer input clock
+
+  tim2->setMode(1, TIMER_OUTPUT_COMPARE_PWM2, PA5);
+  tim2->setMode(2, TIMER_OUTPUT_COMPARE_PWM2, PA1_ALT1);
+  // tim2->setPrescaleFactor(8); // Due to setOverflow with MICROSEC_FORMAT,
+  // prescaler will be computed automatically based on timer input clock
   tim2->setOverflow(85, HERTZ_FORMAT); // 100000 microseconds = 100 milliseconds
-  tim2->setCaptureCompare(1, 30, RESOLUTION_12B_COMPARE_FORMAT); 
-  tim2->setCaptureCompare(2, 30, RESOLUTION_12B_COMPARE_FORMAT); 
+  tim2->setCaptureCompare(1, 30, RESOLUTION_12B_COMPARE_FORMAT);
+  tim2->setCaptureCompare(2, 30, RESOLUTION_12B_COMPARE_FORMAT);
   tim2->attachInterrupt(pulse_control_dev);
   // tim2->attachInterrupt(2, Compare_IT_callback);
   tim2->resume();
- 
+
   tim3->setOverflow(20, HERTZ_FORMAT);
   tim3->attachInterrupt(Update_Tim3_callback);
   tim3->resume();
   // delay(5000);
   Serial.println("setup");
-
-  
-
 }
 
 void loop() {
 
   if (millis() - loopDelay_on > 20000) {
     loopDelay_on = millis();
+    Serial.println("loop");
   }
 
   if (millis() - loopDelay_int_temp > 15000) {
@@ -124,7 +129,7 @@ void loop() {
     VRef = readVref();
     intTemp = readTempSensor(VRef);
     VRef = map(VRef, 0, 4095, 0, 500);
-    if (bt_connected){
+    if (bt_connected) {
       sendMsgTimer();
     }
   }
@@ -147,8 +152,8 @@ void loop() {
       digitalWrite(RUN_LED, LOW);
       delay(100);
       LowPower.shutdown(0);
-    }else if (bt_connected){
-      tim_sleep=0;  
+    } else if (bt_connected) {
+      tim_sleep = 0;
     }
   }
   if (millis() - loopDelay_count_alive > 20) {
@@ -166,13 +171,7 @@ void loop() {
 
 void Update_Tim3_callback() {
   digitalWrite(STATUS_LED, !digitalRead(STATUS_LED));
- 
-
 }
-
-
-
-
 
 void serialEvent() {
   while (Serial.available()) {
