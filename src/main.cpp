@@ -133,12 +133,12 @@ void loop() {
 
   if (millis() - loopDelay_on > 2000) {
     loopDelay_on = millis();
-    Serial.println("loop");
-    // if (test1){
-      MCP42010Write(potBoth, 255, CS);
-    // }else{
-      // MCP42010Write(potBoth, 0, CS);
-    // }  
+    // Serial.println("loop");
+    if (test1){
+       MCP42010Write(potBoth, 255, CS);
+    }else{
+      MCP42010Write(potBoth, 0, CS);
+    }  
     test1 = !test1;
   }
 
@@ -235,6 +235,7 @@ static int32_t readVref() {
   return (VREFINT * ADC_RANGE / analogRead(AVREF)); // ADC sample to mV
 #endif
 }
+
 
 #ifdef ATEMP
 static int32_t readTempSensor(int32_t VRef) {

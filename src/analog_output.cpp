@@ -38,25 +38,27 @@ void out_ana_begin(){
 void MCP42010Write(int addr, int pos, int csPin){
   pos = constrain(pos, 0, 255); 
   digitalWrite(CS, LOW); 
-  if (test2){
-    Serial.println("MCP42010Write: up");
-    for (int i = 0; i<=255; i++){ 
-      // Serial.println("MCP42010Write: up: "+i);              // select chip
-      SPI.transfer(addr);                      // configure target pot with wiper position
-      SPI.transfer(i);
-      delay(50);
-   }
-  } 
-  else{
-    Serial.println("MCP42010Write: down");
-    for (int i = 255; i>=0; i--){ 
-      // Serial.println("MCP42010Write: down: "+i);              // select chip
-      SPI.transfer(addr);                      // configure target pot with wiper position
-      SPI.transfer(i);
-      delay(50);
-    }
-  }
-  test2 = !test2;
+  SPI.transfer(addr);                      // configure target pot with wiper position
+  SPI.transfer(pos);
+  // if (test2){
+  //   Serial.println("MCP42010Write: up");
+  //   // for (int i = 0; i<=255; i++){ 
+  //   //   Serial.println("MCP42010Write: up: "+i);              // select chip
+  //     SPI.transfer(addr);                      // configure target pot with wiper position
+  //     SPI.transfer(pos);
+  //     delay(50);
+  //  }
+  // // } 
+  // else{
+  //   Serial.println("MCP42010Write: down");
+  //   // for (int i = 255; i>=0; i--){ 
+  //     // Serial.println("MCP42010Write: down: "+i);              // select chip
+  //     SPI.transfer(addr);                      // configure target pot with wiper position
+  //     SPI.transfer(i);
+  //     // delay(50);
+  //   }
+  // }
+  // test2 = !test2;
 
   digitalWrite(CS, HIGH); 
   Serial.print("MCP42010Write: ");

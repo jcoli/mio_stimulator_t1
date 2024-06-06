@@ -28,11 +28,11 @@ STM32F401 - Mio Stimulation
 #define PULSE_6 PB6
 #define PULSE_7 PB7
 // PWM
-#define PWM_STUP PA1
+// #define PWM_STUP PA1
 #define MISO PB14
 #define MOSI PB15
 #define SCK PB13
-#define CS PB12
+#define CS PA9
 
 // Ana Input
 #define BAT_CEL1 PA12

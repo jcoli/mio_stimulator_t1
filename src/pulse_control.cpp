@@ -51,7 +51,7 @@ void pulse_init(){
     pinMode(PULSE_6, OUTPUT);
     pinMode(PULSE_7, OUTPUT);
 
-    pinMode(PWM_STUP, OUTPUT);
+    // pinMode(PWM_STUP, OUTPUT);
     
 
     GPIOB->OSPEEDR = 0x03;
@@ -60,7 +60,7 @@ void pulse_init(){
 
 void pulse_init_dev(){
     for (int i = 0; i<8; i++ ){
-        active_ch[i] = false;
+        active_ch[i] = true;
         detect_ch[i] = true;
         intensity_ch[i] = 1;
     }
@@ -102,6 +102,7 @@ void channel_intensity(){
 void pulse_control_dev(){
 
     if (bt_connected && run_enabled){
+        // Serial.print("R");
 
         int ch[8] = {0,0,0,0,0,0,0,0};
 
@@ -109,15 +110,18 @@ void pulse_control_dev(){
             for (int ind_ch = 0; ind_ch<8; ind_ch++){
                 if (ch[ind_ch]<intensity_ch[ind_ch] && active_ch[ind_ch] && detect_ch[ind_ch]) GPIOB->BSRR = (1 << ind_ch); 
             }
-            delayMicroseconds(190);
+            // Serial.print("R");
+            delayMicroseconds(500);
             for (int ind_ch = 0; ind_ch<8; ind_ch++){   
                 if (ch[ind_ch]<=intensity_ch[ind_ch] && active_ch[ind_ch] && detect_ch[ind_ch]) GPIOB->BSRR = ((1 << ind_ch) << 16);
             
             }
-            delayMicroseconds(50);
+            // Serial.print("R1");
+            delayMicroseconds(550);
             for (int x = 0; x<8; x++) {
                     ch[x]++;
             }
+            // Serial.print("R2");
         }    
     }
     
