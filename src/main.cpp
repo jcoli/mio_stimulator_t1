@@ -16,6 +16,7 @@ STM32F401 - Mio Stimulation
 #include "defines.h"
 #include "dig_input.h"
 #include "dig_output.h"
+#include "analog_output.h"
 #include "io_defines.h"
 #include "pulse_control.h"
 #include "tools.h"
@@ -77,21 +78,29 @@ void serialEventRun(void) {
 HardwareTimer *tim2 = new HardwareTimer(TIM2);
 HardwareTimer *tim3 = new HardwareTimer(TIM3);
 
+bool test1 = false;
+
 void setup() {
   Serial.begin(115200);
   // Serial1.begin(19200);
+  Serial.println("setup");
   Serial2.begin(19200);
-
-  delay(1000);
+  
+  // delay(30000);
+  Serial.println("setup");
   dig_output_begin();
   dig_input_begin();
   ana_input_begin();
+  out_ana_begin();
   pulse_init();
   bounce.attach(BT_POWER, INPUT_PULLDOWN);
   bounce.interval(5);
+  Serial.println("setup1");
+  // delay(10000);
 
   LowPower.begin();
   LowPower.attachInterruptWakeup(BT_POWER, wakeUP_fun, RISING, SHUTDOWN_MODE);
+  Serial.println("setup2");
 
   // tim1->setMode(1, TIMER_OUTPUT_COMPARE_PWM1, PA1);
   // tim1->setOverflow(100, HERTZ_FORMAT); // 100000 microseconds = 100
@@ -108,19 +117,29 @@ void setup() {
   tim2->attachInterrupt(pulse_control_dev);
   // tim2->attachInterrupt(2, Compare_IT_callback);
   tim2->resume();
+  Serial.println("setup3");
 
   tim3->setOverflow(20, HERTZ_FORMAT);
   tim3->attachInterrupt(Update_Tim3_callback);
   tim3->resume();
+  Serial.println("setup4");
   // delay(5000);
-  Serial.println("setup");
+  Serial.println("setup5");
+  MCP42010Write(potBoth, 255, CS);
+  Serial.println("setup6");
 }
 
 void loop() {
 
-  if (millis() - loopDelay_on > 20000) {
+  if (millis() - loopDelay_on > 2000) {
     loopDelay_on = millis();
     Serial.println("loop");
+    // if (test1){
+      MCP42010Write(potBoth, 255, CS);
+    // }else{
+      // MCP42010Write(potBoth, 0, CS);
+    // }  
+    test1 = !test1;
   }
 
   if (millis() - loopDelay_int_temp > 15000) {
@@ -199,7 +218,7 @@ void serialEvent2() {
       on_BT_comm();
     }
   }
-  // Serial.println(line2);
+  Serial.println(line2);
   // line2 = "";
 }
 

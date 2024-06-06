@@ -11,6 +11,7 @@ STM32F401 - Mio Stimulation
 #include "io_defines.h"
 #include "tools.h"
 #include "control.h"
+#include "analog_output.h"
 
 void bt_init();
 void bt_at_command(String at_comm);
@@ -41,6 +42,13 @@ extern float batLevel;
 extern float batCel1Level;
 extern float batCel2Level;
 
+extern const byte pot0;    // pot0 addr
+extern const byte pot1;    // pot1 addr
+extern const byte potBoth;    // pot0 and pot1 simultaneous addr
+extern const byte pot0Shutdown;    // pot0 shutdown
+extern const byte pot1Shutdown;    // pot1 shutdown
+extern const byte potBothShutdown;    // pot0 and pot1 simultaneous shutdown
+
 void bt_init(){
     // Serial.println("bt_init");
     String msg = "";
@@ -65,7 +73,7 @@ void on_BT_comm(){
     }else{
         // Serial.println(line2);
         split_msg_4(line2);
-        // Serial.println("split: "+ retMsg4[0] + " - " +retMsg4[1] + " - " + retMsg4[2] + " - " + retMsg4[3]);
+        Serial.println("split: "+ retMsg4[0] + " - " +retMsg4[1] + " - " + retMsg4[2] + " - " + retMsg4[3]);
         decoder_four();
         string2Complete = false;
         line2="";

@@ -12,6 +12,7 @@ STM32F401 - Mio Stimulation
 #include "tools.h"
 #include "communication.h"
 #include "pulse_control.h"
+#include "analog_output.h"
 
 void on_receive(int mSize);
 void on_bit_alive();
@@ -38,6 +39,13 @@ extern String retMsg2[2];
 extern String retMsg3[3];
 extern String retMsg4[4];
 extern String retMsg5[5]; 
+
+extern const byte pot0;    // pot0 addr
+extern const byte pot1;    // pot1 addr
+extern const byte potBoth;    // pot0 and pot1 simultaneous addr
+extern const byte pot0Shutdown;    // pot0 shutdown
+extern const byte pot1Shutdown;    // pot1 shutdown
+extern const byte potBothShutdown;    // pot0 and pot1 simultaneous shutdown
 
 // extern HardwareTimer *Tim1;
 extern HardwareTimer *tim3;
