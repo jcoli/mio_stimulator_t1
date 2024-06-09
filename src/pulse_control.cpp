@@ -60,7 +60,7 @@ void pulse_init(){
 
 void pulse_init_dev(){
     for (int i = 0; i<8; i++ ){
-        active_ch[i] = true;
+        active_ch[i] = false;
         detect_ch[i] = true;
         intensity_ch[i] = 1;
     }
@@ -111,13 +111,13 @@ void pulse_control_dev(){
                 if (ch[ind_ch]<intensity_ch[ind_ch] && active_ch[ind_ch] && detect_ch[ind_ch]) GPIOB->BSRR = (1 << ind_ch); 
             }
             // Serial.print("R");
-            delayMicroseconds(500);
+            delayMicroseconds(150);
             for (int ind_ch = 0; ind_ch<8; ind_ch++){   
                 if (ch[ind_ch]<=intensity_ch[ind_ch] && active_ch[ind_ch] && detect_ch[ind_ch]) GPIOB->BSRR = ((1 << ind_ch) << 16);
             
             }
             // Serial.print("R1");
-            delayMicroseconds(550);
+            delayMicroseconds(150);
             for (int x = 0; x<8; x++) {
                     ch[x]++;
             }
