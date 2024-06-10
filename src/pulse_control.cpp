@@ -7,10 +7,16 @@ STM32F401 - Mio Stimulation
 
 #include <Arduino.h>
 
+#include "ana_Input.h"
+#include "communication.h"
+#include "control.h"
 #include "defines.h"
+#include "dig_input.h"
+#include "dig_output.h" 
+#include "analog_output.h"
 #include "io_defines.h"
 #include "tools.h"
-#include "communication.h"
+
 
 void pulse_init();
 void pulse_control();
@@ -22,6 +28,7 @@ void pulse_control_dev();
 void pulse_init_dev();
 void channel_intensity();
 void enable_channel();
+void output_volt();
 
 extern bool bt_enabled;
 extern bool bt_connected;
@@ -39,6 +46,14 @@ extern int intensity_ch[8];
 extern String retMsg4[4];
 
 extern int global_int; 
+
+extern byte pot0;  
+extern byte pot1;  
+extern byte potBoth;  
+extern byte pot0Shutdown;  
+extern byte pot1Shutdown;  
+extern byte potBothShutdown;  
+
 
 
 void pulse_init(){
@@ -81,6 +96,7 @@ void enable_channel(){
 }
 
 void channel_intensity(){
+    Serial.println("Channel Intensity: ");
     
     if (retMsg4[0].equals("8")) {
         int mChannel = retMsg4[2].toInt();
@@ -97,6 +113,29 @@ void channel_intensity(){
             // Serial.println(global_int);
         }
     }
+    
+    output_volt();
+
+}
+
+void output_volt(){
+    Serial.print("Output volt: ");
+    int max_value = 0;
+    for (int i = 0; i<8; i++){
+        if (intensity_ch[i]>max_value){
+            max_value = intensity_ch[i];
+        }
+      
+    }
+    int pot_value = 0;
+    pot_value = map(max_value, 0, 25, 100, 255 );
+
+    MCP42010Write(potBoth, pot_value, CS);
+    Serial.print(max_value);
+    Serial.print(" - ");
+    Serial.println(pot_value);
+
+
 }
 
 void pulse_control_dev(){

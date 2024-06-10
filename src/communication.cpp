@@ -73,7 +73,7 @@ void on_BT_comm(){
     }else{
         // Serial.println(line2);
         split_msg_4(line2);
-        Serial.println("split: "+ retMsg4[0] + " - " +retMsg4[1] + " - " + retMsg4[2] + " - " + retMsg4[3]);
+        // Serial.println("split: "+ retMsg4[0] + " - " +retMsg4[1] + " - " + retMsg4[2] + " - " + retMsg4[3]);
         decoder_four();
         string2Complete = false;
         line2="";

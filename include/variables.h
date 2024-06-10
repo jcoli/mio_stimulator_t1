@@ -16,12 +16,12 @@ unsigned long loopDelay_int_temp = millis();
 unsigned long loopDelay_bit_alive = millis();
 unsigned long loopDelay_count_alive = millis();
 
-const byte pot0            = 0x11;    // pot0 addr
-const byte pot1            = 0x12;    // pot1 addr
-const byte potBoth         = 0x13;    // pot0 and pot1 simultaneous addr
-const byte pot0Shutdown    = 0x21;    // pot0 shutdown
-const byte pot1Shutdown    = 0x22;    // pot1 shutdown
-const byte potBothShutdown = 0x23;    // pot0 and pot1 simultaneous shutdown
+byte pot0            = 0x11;    // pot0 addr
+byte pot1            = 0x12;    // pot1 addr
+byte potBoth         = 0x13;    // pot0 and pot1 simultaneous addr
+byte pot0Shutdown    = 0x21;    // pot0 shutdown
+byte pot1Shutdown    = 0x22;    // pot1 shutdown
+byte potBothShutdown = 0x23;    // pot0 and pot1 simultaneous shutdown
 
 bool bt_enabled = false;
 bool bt_connected = false;

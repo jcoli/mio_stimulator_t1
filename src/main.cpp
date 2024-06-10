@@ -15,7 +15,7 @@ STM32F401 - Mio Stimulation
 #include "control.h"
 #include "defines.h"
 #include "dig_input.h"
-#include "dig_output.h"
+#include "dig_output.h" 
 #include "analog_output.h"
 #include "io_defines.h"
 #include "pulse_control.h"
@@ -125,21 +125,21 @@ void setup() {
   Serial.println("setup4");
   // delay(5000);
   Serial.println("setup5");
-  MCP42010Write(potBoth, 255, CS);
+  MCP42010Write(potBoth, 0, CS);
   Serial.println("setup6");
 }
 
 void loop() {
 
   if (millis() - loopDelay_on > 2000) {
-    loopDelay_on = millis();
+    // loopDelay_on = millis();
     // Serial.println("loop");
-    if (test1){
-       MCP42010Write(potBoth, 255, CS);
-    }else{
-      MCP42010Write(potBoth, 0, CS);
-    }  
-    test1 = !test1;
+    // if (test1){
+    //    MCP42010Write(potBoth, 255, CS);
+    // }else{
+    //   MCP42010Write(potBoth, 0, CS);
+    // }  
+    // test1 = !test1;
   }
 
   if (millis() - loopDelay_int_temp > 15000) {
