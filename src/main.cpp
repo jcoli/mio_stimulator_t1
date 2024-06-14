@@ -108,7 +108,7 @@ void setup() {
   // tim1->resume();
 
   tim2->setMode(1, TIMER_OUTPUT_COMPARE_PWM2, PA5);
-  tim2->setMode(2, TIMER_OUTPUT_COMPARE_PWM2, PA1_ALT1);
+  // tim2->setMode(2, TIMER_OUTPUT_COMPARE_PWM2, PA1_ALT1);
   // tim2->setPrescaleFactor(8); // Due to setOverflow with MICROSEC_FORMAT,
   // prescaler will be computed automatically based on timer input clock
   tim2->setOverflow(85, HERTZ_FORMAT); // 100000 microseconds = 100 milliseconds

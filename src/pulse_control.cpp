@@ -75,7 +75,7 @@ void pulse_init(){
 
 void pulse_init_dev(){
     for (int i = 0; i<8; i++ ){
-        active_ch[i] = false;
+        active_ch[i] = true;
         detect_ch[i] = true;
         intensity_ch[i] = 1;
     }

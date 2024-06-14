@@ -16,7 +16,7 @@ STM32F401 - Mio Stimulation
 #define RUN_LED PC14
 #define BAT_LED PC15
 // #define BUZZER_PIN  PB15
-#define ESP_WKP PA8
+#define ESP_WKP PA1
 
 // Pulses
 #define PULSE_0 PB0
@@ -31,7 +31,7 @@ STM32F401 - Mio Stimulation
 // #define PWM_STUP PA1
 #define MISO PB14
 #define MOSI PB15
-#define SCK PB13
+#define SCK PB13 
 #define CS PA9
 
 // Ana Input
