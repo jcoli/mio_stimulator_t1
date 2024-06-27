@@ -73,6 +73,8 @@ void on_bit_connected(){
         bt_connected = true;
         Serial2.print("0,0,0,1,#");
         Serial.println("on_bit_conn");
+    }else{
+        tim_conn = 0;
     }
 }
 

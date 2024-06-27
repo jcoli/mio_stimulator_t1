@@ -19,7 +19,7 @@ STM32F401 - Mio Stimulation
 #define ESP_WKP PA1
 
 // Pulses
-#define PULSE_0 PB0
+#define PULSE_0 PB0 
 #define PULSE_1 PB1
 #define PULSE_2 PB2
 #define PULSE_3 PB3
