@@ -164,16 +164,16 @@ void loop() {
       on_bit_connected();
     }
 
-    if ((tim_sleep >= SHUTDOWN_INTERVAL_MS) && (!bt_connected)) {
-      digitalWrite(ESP_WKP, LOW);
-      digitalWrite(STATUS_LED, LOW);
-      digitalWrite(BAT_LED, LOW);
-      digitalWrite(RUN_LED, LOW);
-      delay(100);
-      LowPower.shutdown(0);
-    } else if (bt_connected) {
-      tim_sleep = 0;
-    }
+      if ((tim_sleep >= SHUTDOWN_INTERVAL_MS) && (!bt_connected)) {
+        digitalWrite(ESP_WKP, LOW);
+        digitalWrite(STATUS_LED, LOW);
+        digitalWrite(BAT_LED, LOW);
+        digitalWrite(RUN_LED, LOW);
+        delay(100);
+        LowPower.shutdown(0);
+      } else if (bt_connected) {
+        tim_sleep = 0;
+      }
   }
   if (millis() - loopDelay_count_alive > 20) {
     loopDelay_count_alive = millis();

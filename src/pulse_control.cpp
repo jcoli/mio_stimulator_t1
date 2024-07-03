@@ -109,8 +109,10 @@ void channel_intensity(){
     for (int i = 0; i<8; i++){
         if (intensity_ch[i] > global_int){
             global_int = intensity_ch[i];
-            // Serial.print("Global Intensity: ");
-            // Serial.println(global_int);
+            Serial.print("Global Intensity: ");
+            Serial.print(i);
+            Serial.print(" - ");
+            Serial.println(global_int);
         }
     }
     

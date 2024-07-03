@@ -54,7 +54,7 @@ void MCP42010Write(int addr, int pos, int csPin){
   //   // for (int i = 255; i>=0; i--){ 
   //     // Serial.println("MCP42010Write: down: "+i);              // select chip
   //     SPI.transfer(addr);                      // configure target pot with wiper position
-  //     SPI.transfer(i);
+  //     SPI.transfer(i); 
   //     // delay(50);
   //   }
   // }
